@@ -1,0 +1,1506 @@
+---
+title: "Per Capita Calculations"
+author: "Kyle Brinkman"
+date: "7/21/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+setwd("~/VU/Thesis")
+library(haven)
+library(tidyverse)
+library(dplyr)
+library(bookdown)
+```
+
+## S8A_hh_income
+
+Here we have data on household income sources by person. we tie this to hhid to apply into the larger FD set
+```{r hhincome, echo=FALSE}
+
+
+S8A_hh_income <- read_dta("Kenya_FD_materials/BaselineSurvey/S8A_hh_income.dta")
+
+income_source <- S8A_hh_income %>% select(hhid, starts_with("S8Aq")) %>% 
+  rename(Husband = S8Aq2,
+         Wife = S8Aq3,
+         Children = S8Aq4,
+         Other = S8Aq5,
+         Specify = S8Aq6)
+library(tidyr)
+income_source <- income_source %>% drop_na(hhid)
+
+```
+Household income sources, descriptions taken from "Baseline survey correct names"
+Kindly explain the major sources of income are for the household. 
+Could you please provide an estimate of the contribution of different household members in total household income in the past 12 months
+Main income of the household S8Aq1
+Husband  S8Aq2
+Wife         S8Aq3
+Children  S8Aq4
+Other       S8Aq5
+Specify    S8Aq6
+
+For Aq1, Likely who does most work
+1=adult males in household,
+2=adult females in household,
+3=male children in household,
+4=female children in household,
+5= male/female children in household,
+6=hired labor,
+-66=other, specify
+
+
+##Demographic data
+
+descriptions taken from "Baseline survey correct names"
+```{r demography}
+S2_hh_demography <- read_dta("Kenya_FD_materials/BaselineSurvey/S2_hh_demography.dta")
+
+# length(unique(S2_hh_demography$hhid))
+#122 unique households, there are 120 hhids in the entire full set.
+
+#Getting HH Head 
+hhhead <- S2_hh_demography %>% filter(S2q9 == 1) %>% 
+  select(hhid = hhid,
+         gender = S2q2,
+         age = S2q3,
+         maritalstatus = S2q10,
+         job1 = S2q5,
+         job2 = S2q6
+         )
+```
+These codes will be used to isolate the sample to CSA-able income generating activities assigned to hhids
+
+
+Gender: Male=1 / Female=2 S2Aq2
+Age (years) S2Aq3
+Highest level of education attained (code A)S2Aq4
+Primary occupation (code B)S2Aq5
+Secondary occupation (code B)S2Aq6
+Labor contribution to occupations (code C)[prim]S2Aq7
+How many months has [name] been in location in past year? S2Aq8	
+Relation to HH   (code D) S2Aq9
+Marital status (>12yrs)(code E)S2Aq10
+
+Codes A: 1 = No formal schooling, 2 = Primary incomplete, 3 = Primary complete,
+4 = Secondary incomplete, 5 = Secondary complete, 6 = Tertiary /university incomplete,
+7 = tertiary/University complete, 8 =Adult education incomplete, 9 = Adult education complete, 10 = Don’t know
+
+Codes B: 1=farming crop, 2=farming livestock, 3=salaried employment,
+4=self-employed off-farm, 5=casual laborer on-farm, 6=casual labored off-farm,
+7=school/college, 8=non-school child, 9=herding, 10-household chores, 11=other, specify
+
+Codes C: 1=full time, 2=part time, 3=occasionally, 4=not a worker
+
+S2q9 Codes D: 1= Household head, 2= Spouse, 3= Son/daughter, 4= Parent living with son/daughter,
+5= Son/daughter in-law, 6=Grandchild, 7= other relative, 8= Hired worker 9= Other, specify_
+
+Codes E: 0=single, 1=married, 2=widowed, 3=divorced, 4=other, specify
+
+
+##Crop production
+
+Here we take crop production metrics such as size of plots and crop type by household
+
+```{r crop}
+S3A_crop_prod <- read_dta("Kenya_FD_materials/BaselineSurvey/S3A_crop_prod.dta")
+
+#This contains information on each household's plots, crops in them, the size, and who works them mainly
+crop_prod <- S3A_crop_prod %>% 
+  select(hhid, S3Aq1, S3Aq4, S3Aq5, S3Aq8) %>% 
+  rename(plotnumber = S3Aq1,
+         crop = S3Aq4,
+         cropsize = S3Aq5,
+         mainworker = S3Aq8) %>% 
+  group_by(hhid) %>% 
+  mutate(totalplot = sum(cropsize),
+         plots = length((unique(plotnumber)))
+         )
+
+#We take the total size of land and number of plots each household has
+hhplots <- crop_prod %>% 
+  select(hhid, totalplot, plots) %>% 
+  distinct()
+
+# summary(hhplots)
+# The median total plot size is 2 and the mean is slightly higher
+# p.plotsize <-
+#   ggplot(hhplots, aes(x = totalplot)) +
+#   geom_histogram() +
+#   geom_vline(aes(xintercept=3),
+#             color="blue", linetype="dashed", size=1)
+# p.plotsize
+
+# The distribution tapers off quickly after 3;there's one household, 101, which has a huge amount of land at 33
+
+#Here's a created indicator for a large amount of land use
+hhplots <- hhplots %>% 
+  mutate(bigland = ifelse(totalplot > 3, 1, 0))
+
+# table(hhplots$bigland)
+
+```
+122 farming households, ALL HHIDS are farmers
+mainworker is "Who does the most work", like S8 income source
+1=adult males in household,
+2=adult females in household,
+3=male children in household,
+4=female children in household,
+5= male/female children in household,
+6=hired labor,
+-66=other, specify
+
+
+##Financial Diary Data
+
+We'll first use FD data to create variables on CSA participation and CSV indicators
+```{r csa, echo=FALSE}
+FD <- read_dta("Kenya_FD_materials/Full FD_Kyle/FD_Kyle.dta")
+# colnames(FD)
+# length(unique(FD$hhid))
+
+Participation <- FD %>% select(hhid, strata, CSV, WeekNr, CSAWhat, CSAQuantity, CSAUnit, FarmProductType, FarmProductQuantity, FarmProductUnitID)
+
+# class(Participation$CSAWhat)
+
+CSAPart <- Participation %>% filter(CSAWhat > 0)
+# unique(CSAPart$CSAWhat)
+CSAPart$CSA <- 1
+
+CSAPart <- CSAPart %>% select(hhid, CSA)
+
+
+Participation <- left_join(x = Participation, y = CSAPart, by = "hhid")
+
+Participation$CSA[is.na(Participation$CSA)] <- 0
+
+# table(Participation$CSA, Participation$CSV)
+
+Participation <- Participation %>% group_by(hhid) %>% 
+  mutate(totalPart = sum(CSA), )
+
+Participation <- distinct(Participation)
+hhPart <-  Participation %>% select(hhid, CSV, CSA)
+hhPart <- distinct(hhPart)
+
+# table(hhPart$CSV)
+# 
+# table(hhPart$CSA)
+# 
+# table(hhPart$CSV, hhPart$CSA)
+```
+
+```{r csacount, echo=FALSE}
+#Counting unique CSA use
+CSAcount <- FD %>% select(hhid, CSAWhat, CSAQuantity, CSAUnit, FarmProductType, FarmProductQuantity, FarmProductUnitID) %>% filter(CSAWhat > 0)
+CSAcount$CSAuse <- 1
+
+CSAcount <- CSAcount %>% group_by(hhid) %>% 
+  mutate(usecount = sum(CSAuse))
+
+CSAcount <- CSAcount %>% select(hhid, usecount) %>% distinct()
+
+# 
+# length(unique(CSAcount$hhid))
+# summary(CSAcount)
+
+```
+33 non CSV, 87 CSV
+45 non CSA, 75 CSA
+
+15 non CSV, non CSA
+18 non CSV, CSA
+30 CSV, non CSA
+57 CSV, CSA
+
+
+let's create some group variables for each, make it easier later
+
+```{r groups, echo=FALSE}
+hhPart<- hhPart %>% mutate(partGroup= CSV + 2*CSA)
+
+partGroup.names <- c("non-CSV, non-CSA", "CSV, non-CSA", "non-CSV, CSA", "CSV, CSA")
+partGroup.numbers <- 0:3
+
+CSA.numbers <- 0:1
+CSA.names <- c("non-CSA", "CSA")
+CSV.numbers <- 0:1
+CSV.names <- c("non-CSV", "CSV")
+
+names(CSA.names) <- CSA.numbers
+names(CSV.names) <- CSV.numbers
+
+
+
+names(partGroup.names) <- partGroup.numbers
+
+
+partGroup.index <- data.frame(partGroup = partGroup.numbers, partGroup.names)
+
+partGroup.index <- partGroup.index %>% 
+  mutate(CSA = c(0,0,1,1),
+         CSV = c(0,1,0,1),
+         CSA.names = c("non-CSA", "non-CSA", "CSA", "CSA"),
+         CSV.names = c("non-CSV", "CSV", "non-CSV", "CSV"))
+#This can act as a translator for partGroup later on back to CSA and CSV, as well as the label name
+
+```
+
+###Idenitifying households
+CSV is bianary variable on if a hhid is in a CSV village
+So CSA participating hhids can be idenified by taking HHIDs with CSAWhat which are not NA.
+From there I can say the degree of CSA participation of a household.
+This allows for identifying the three groups of non-CSV, CSV CSAers, CSV non-CSAers. And if any, non-CSV CSAers
+
+##Codes
+
+Variables
+FARMPROD	'farm product'
+FARMQ		'quantity of farm product' number of unit
+FARMUN		'farm product unit' so acres, kilograms, meters etc
+CSAWHAT		'what type of CSA'
+CSAQ		'how much CSA'
+CSAUN		'Unit of CSA'
+CSACOST		'Costs of CSA'
+PURBUS		'Purchases made for business?'
+SALBUS		'Sales made for business?'
+
+CSAUnit is 29 unique
+
+CSA practices Most likely under CSAWhat
+
+CS01	"High yielding varieties"
+CS02	"Improved seeds"
+CS03	"Early maturing varieties"
+CS04	"Drough tolerant varieties"
+CS05	"Pest and disease tolerant varieties"
+CS06	"Cross breeding Galla goat"
+CS07	"Cross breeding Red Masai sheep"
+CS08	"Fodder storage"
+CS09	"Intercropping"
+CS10	"Crop cover"
+CS11	"Micro catchment"
+CS12	"Ridges and bounds"
+CS13	"Hedges"
+CS14	"Fertilizer"
+CS15	"Manure and compost"
+CS16	"Mango trees planted"
+CS17	"Other trees planted"
+CS18    "Improved poultry, rainbow or croilers"
+CS24	"Other activities"
+
+CSAWhat is likely what we want to use, 71780 rows including NA and 16 other unique variables on CSA practice
+
+Loan type
+unique(FD$LoanCreditType)
+length(unique(FD$LoanCreditType))
+LoanCreditType variable
+TYPS    loan types
+TY01	"loan repayment received"
+TY02	"credit repayment received"
+TY03	"money borrowed"
+TY04	"gift or remittances received"
+TY05	"advance payment received"
+TY06	"CBO share received"
+TY07	"loan repayment paid"
+TY08	"credit repayment paid"
+TY09	"money lent"
+TY10	"gift or remittances given"
+TY11	"advance paymetn paid"
+TY12	"CBO contribution paid"
+
+
+## Income Subsetting
+
+Here we need to create a set of incomes per household over the course of the study. 
+
+```{r income, echo=FALSE}
+# unique(FD$InOutTransaction)
+# idk <- FD %>% filter(InOutTransaction == 3)
+#only 3 rows
+# idk <- FD %>% filter(InOutTransaction ==99)
+#1
+# idk <- FD %>% filter(InOutTransaction == '')
+#lots, 
+
+#Non-transaction data, contains all CSA indicators for some reason
+# summary(Income)
+# 
+# notinout <- FD %>% filter(InOutTransaction == '') 
+# 
+# nrow(notinout)
+# unique(notinout$CSAWhat)
+#contains all practices, a blank field in INout is likely to just be a tracker, but there is income...
+
+# unique(notinout$TransactionTypeID)
+#10, 7, 6, 4, 1, 12
+
+# idk <- FD %>% filter(InOutTransaction == 2)
+#lots, spending
+
+Income <- FD %>% select(hhid, WeekNr, strata, CSV, 
+                        InOutTransaction, TransactionTypeID, 
+                        TransactionKey, CashFlow, 
+                        CashFlowCorrection,
+                        AmountCash, AmountCredit, AmountMpesa, 
+                        AmountInKind, AmountGift, AmountBank, 
+                        AmountAdvance, AmountShopDeposit, 
+                        AmountLaborSharing, LoanCreditType, 
+                        SavingsType, FarmProductType, 
+                        CSAWhat, FarmProductWhatID,
+                        SavingsCurrentBalance,
+                        HHMgender,HHMage)
+
+# idk <- FD %>% filter(FD$InOutTransaction == 3) 
+# #apparently 3 is advances paid
+Income <- Income %>% filter(InOutTransaction != 2)
+#removing spending
+
+Income <- Income %>% mutate_at(vars(AmountCash:AmountLaborSharing), ~replace(., is.na(.), 0))
+#fixing NAs to 0 so they can be added together
+
+Income <- Income %>% 
+  mutate(total = AmountCash + AmountCredit+ AmountMpesa + AmountInKind + AmountBank +
+           AmountAdvance + AmountShopDeposit + AmountLaborSharing)
+
+# Income <- Income %>% filter(FD$InOutTransaction == 1) This is a weird one, blanks include income to hh
+Income <- Income %>% select(-InOutTransaction)
+
+# negatives <- Income %>% filter(Income$CashFlow < 0)
+# print(nrow(negatives))
+#57 
+# print(unique(Income$TransactionTypeID))
+#13, 11, 5
+
+# For now, we'll remove them
+Income <- Income %>% filter(Income$total > 0)
+```
+So now we have positive, incoming transactions of all types, with indicators of their affiliation with CSA activity
+
+##Time and months
+```{r months}
+Income$date <- lubridate::ymd("2019-03-05") + lubridate::weeks(Income$WeekNr)
+
+#This gives the full date of each transaction based on the start date March 5th and given week number
+#When it comes to plotting, it should be done with full date format to make sure the breaks are at the correct place
+Income$dateFloor <- lubridate::floor_date(Income$date, unit = "month")
+Income$month <- lubridate::month(Income$date)
+Income$year <- lubridate::year(Income$date)
+#gives month set at the first and year
+#Here we will also put transactions within their given months, 
+
+```
+
+##Variables calculated per month, income, observations, mean income, CV
+```{r monthvars, echo=FALSE}
+# Monthly income per household====
+
+Income <-  Income %>% 
+  group_by(hhid, dateFloor) %>%
+  mutate(moInc = sum(total))
+
+Income <- Income %>% select(hhid, dateFloor, moInc, strata)
+
+Income <- distinct(Income)
+
+Income <- Income %>% group_by(hhid) %>% arrange(dateFloor, .by_group = TRUE)
+
+ungroup(Income)
+
+# idk <- Income %>% count(hhid)
+# unique(idk$n)
+# idk <-Income %>% filter(CashFlow>0)
+# idk <- Income %>% filter(total > 0)
+# nrow(idk)
+# testing, works!
+# hhid1 <- Income %>% filter(hhid == 1) %>% 
+#   select(month, year, hhid, moInc)
+
+#number of observed months of each hhid
+Income <- Income %>% 
+  group_by(hhid) %>%
+  mutate(obs = length((unique(dateFloor))))
+
+#Mean monthly income of each household
+Income <- Income %>% 
+  group_by(hhid) %>%
+  mutate(mmoInc = sum(moInc) /obs)
+
+#Standard deviation
+Income <- Income %>% 
+  group_by(hhid) %>% 
+  mutate(sdmoInc = sd(moInc))
+
+#CV
+Income <- Income %>% 
+  group_by(hhid) %>% 
+  mutate(CV = sdmoInc/mmoInc)
+
+
+# length(unique(Income$mmoInc))
+#120 checks out
+
+```
+Now to merge with the main set. Participation to income
+
+
+```{r merge, echo=FALSE}
+# Bringing partcipation and income variables together
+Income <- left_join(x = Income, y = hhPart, by = "hhid")
+
+Incomplete <- Income %>% filter(obs < 9)
+#I'll be cutting these incomplete households as they may miss seasonal variations
+
+Income <- Income %>% filter(obs > 8)
+Income <- Income %>% filter(dateFloor != "2020-03-01")
+#I want at least 3/4 of a year
+#The last month is only partial and designates lots of households as poor, so I take it out
+
+# length(unique(Income$hhid)) we are left with 118 households
+
+hhchars <- Income %>% select(hhid, mmoInc, sdmoInc, CV, CSV, CSA, partGroup)
+# hhchars <- Income %>% select(hhid, mmoInc, sdmoInc, CV, CSV, CSA, partGroup, povcount, quintile)
+
+hhchars <- distinct(hhchars)
+#now we only have one row per hhid
+
+```
+
+In this process we also take out households which we have little data on and might skew analysis due to not incorporating seasonal variation
+
+
+##Quantiles
+
+Here we break down the households into equal quintiles of mean monthly income. 
+```{r quantiles, echo=FALSE}
+ungroup(hhchars)
+hhchars$quintile <- ntile(hhchars$mmoInc, 5)
+
+# table(hhchars$quintile)
+
+q <- quantile(hhchars$mmoInc, probs = c(.2, .4, 0.6, .8, 1))
+
+breaks <- data.frame(q)
+
+# hhchars %>% filter(mmoInc < q[1]) %>% nrow()
+# hhchars %>% filter(mmoInc > q[1] & mmoInc < q[2]) %>% nrow()
+# hhchars %>% filter(mmoInc > q[2] & mmoInc < q[3]) %>% nrow()
+# hhchars %>% filter(mmoInc > q[3] & mmoInc < q[4]) %>% nrow()
+# hhchars %>% filter(mmoInc > q[4]) %>% nrow()
+#adds up, 118
+
+```
+From this we not only get households into quintile groups but the lines which divide them from eachother.
+
+Our poverty line will be between the second and third quintile, q[2]
+
+##Poverty and poverty persistence
+```{r poverty, echo=FALSE}
+#Poverty line and count of months hhid is in poverty----
+# q[2] is the boundary between the second and third quintile, will be our poverty line
+
+Income <- Income %>% mutate(pov = ifelse(moInc < q[2], 1, 0))
+
+#now count over months
+Income <- Income %>% group_by(hhid) %>% mutate(povcount = sum(pov))
+Income <- Income %>% group_by(hhid) %>% mutate(povshare = povcount/obs)
+
+Income <- Income %>% 
+  mutate(month = months(dateFloor))
+#Sometimes, often, always poor, INCOMPLETE
+# unique(Income$povcount)
+# idk <- Income %>% filter(povcount == 0)
+# unique(idk$hhid)
+
+#we run through the variable creation again with povcount and quintiles 
+hhchars <- Income %>% select(hhid, mmoInc, sdmoInc, CV, CSV, CSA, partGroup, povcount, obs, povshare)
+
+hhchars <- distinct(hhchars)
+
+ungroup(hhchars)
+
+hhchars$quintile <- ntile(hhchars$mmoInc, 5)
+
+# table(hhchars$quintile)
+```
+
+
+
+##Household metrics
+
+We track which households identify into each group and create variables by those groupings
+This includes in group CV and income. Additionally we count how many households fit into these groupings and sub groups.
+
+
+```{r metrics}
+ungroup(hhchars)
+hhchars <- hhchars %>% group_by(partGroup)
+
+pg.metrics <- summarise(hhchars, mCV = mean(CV),
+                         medianCV = median(CV),
+          gmmoInc = mean(mmoInc),
+          households = n())
+pg.metrics <- left_join(pg.metrics, partGroup.index, by = "partGroup")
+
+#participation based metrics
+
+hhchars <- hhchars %>% group_by(quintile)
+
+q.metrics <- summarise(hhchars, mCV = mean(CV),
+                       medianCV = median(CV),
+          gmmoInc = mean(mmoInc),
+          households = n())
+#income quintile based metrics
+
+
+hhchars <- hhchars %>% group_by(quintile, partGroup)
+
+c.metrics <- summarise(hhchars, mCV = mean(CV),
+                       medianCV = median(CV),
+          gmmoInc = mean(mmoInc),
+          households = n())
+
+c.metrics <- left_join(c.metrics, partGroup.index, by = "partGroup")
+
+#for only csa and csv
+hhchars <- hhchars %>% group_by(CSA)
+
+metrics.csa <-  summarise(hhchars, mCV = mean(CV),
+                          medianCV = median(CV),
+          gmmoInc = mean(mmoInc),
+          households = n())
+
+
+hhchars <- hhchars %>% group_by(CSV)
+
+metrics.csv <-  summarise(hhchars, mCV = mean(CV),
+                          medianCV = median(CV),
+          gmmoInc = mean(mmoInc),
+          households = n())
+
+
+
+#combined groupings of participation and quintile metrics. Far smaller in counts, but more granular
+
+#Now we incorporate quintile characteristics into the main set.
+trunk <- hhchars %>% ungroup() %>%  select(hhid, quintile)
+
+Income <- 
+  left_join(Income, trunk, by = "hhid")
+
+Income %>% group_by(quintile)
+summarise(Income, minc = mean(moInc))
+
+
+```
+```{r plotsize}
+hhchars <- left_join(hhchars, hhplots, by = "hhid")
+
+```
+
+```{r hhhead}
+hhchars <- left_join(hhchars, hhhead, by = "hhid")
+unique(hhchars$gender)
+hhchars <- hhchars %>% mutate(
+  femalehh = as.numeric(gender) - 1
+)
+# table(hhchars$femalehh)
+#1 is female
+```
+```{r povertypersistence}
+hhchars <- hhchars %>% 
+  mutate(
+    persistent = ifelse(povshare > .5, 1, 0)
+  )
+#about half and half
+```
+
+```{r aboveline}
+hhchars <- hhchars %>% 
+  mutate(
+    upperquint = ifelse(quintile > 2, 1, 0)
+  )
+#about half and half
+```
+
+```{r csause}
+hhchars <- left_join(hhchars, CSAcount, by = "hhid")
+hhchars$usecount[is.na(hhchars$usecount)] <- 0
+
+
+library(ggthemes)
+p.iuc <- ggplot(hhchars, aes(x = log(mmoInc), y = usecount, color = factor(CSV))) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_fivethirtyeight() +
+  labs(title = "Income to CSA Usage",y = "CSA Use", x = "Log Mean Monthly Income", color = "CSV Status") +
+  scale_fill_discrete(name = "CSV Status", labels = c("non-CSV", "CSV"))
+# +
+   # theme(axis.title = element_text())
+p.iuc
+```
+
+##Tables
+```{r tables, echo=FALSE}
+library(knitr)
+
+t.o <- hhchars %>% 
+  ungroup() %>% 
+  summarise(meanCV = mean(CV), medianCV = median(CV), medianIncome = median(mmoInc), 
+            meanPovertyFreq = mean(povshare), CSAuse = mean(usecount), n = n())
+t.o$Group <- "Overall"
+t.o <- t.o[, c(7, 1, 2, 3, 4, 5, 6)]
+
+t.pg <- hhchars %>%
+  group_by(partGroup) %>%
+  summarise(meanCV = mean(CV), medianCV = median(CV), medianIncome = median(mmoInc), 
+            meanPovertyFreq = mean(povshare), CSAuse = mean(usecount), n = n())
+colnames(t.pg)[colnames(t.pg) == 'partGroup'] <- 'Group'
+t.pg[,1] <-  c("non-CSV, non-CSA", "CSV, non-CSA", "non-CSV, CSA", "CSV, CSA")
+
+t.csa <- hhchars %>%
+  group_by(CSA) %>%
+  summarise(meanCV = mean(CV), medianCV = median(CV), medianIncome = median(mmoInc), 
+            meanPovertyFreq = mean(povshare), CSAuse = mean(usecount), n = n())
+colnames(t.csa)[colnames(t.csa) == 'CSA'] <- 'Group'
+t.csa[,1] <-  c("non-CSA", "CSA")
+
+t.csv <- hhchars %>%
+  group_by(CSV) %>%
+  summarise(meanCV = mean(CV), medianCV = median(CV), medianIncome = median(mmoInc), 
+            meanPovertyFreq = mean(povshare), CSAuse = mean(usecount), n = n())
+colnames(t.csv)[colnames(t.csv) == 'CSV'] <- 'Group'
+t.csv[,1] <-  c("non-CSV", "CSV")
+
+
+t.fh <- hhchars %>%
+  group_by(femalehh) %>%
+  summarise(meanCV = mean(CV), medianCV = median(CV), medianIncome = median(mmoInc), 
+            meanPovertyFreq = mean(povshare), CSAuse = mean(usecount), n = n())
+t.fh <- t.fh[1:2,]
+colnames(t.fh)[colnames(t.fh) == 'femalehh'] <- 'Group'
+t.fh[,1] = c("Male","Female")
+
+
+t.uq <- hhchars %>%
+  group_by(upperquint) %>%
+  summarise(meanCV = mean(CV), medianCV = median(CV), medianIncome = median(mmoInc), 
+            meanPovertyFreq = mean(povshare), CSAuse = mean(usecount), n = n())
+colnames(t.uq)[colnames(t.uq) == 'upperquint'] <- 'Group'
+t.uq[,1] = c("Low-income","Higher-income")
+
+t.bl <- hhchars %>%
+  group_by(bigland) %>%
+  summarise(meanCV = mean(CV), medianCV = median(CV), medianIncome = median(mmoInc), 
+            meanPovertyFreq = mean(povshare), CSAuse = mean(usecount), n = n()) 
+t.bl <- t.bl[1:2,]
+colnames(t.bl)[colnames(t.bl) == 'bigland'] <- 'Group'
+t.bl[,1] = c("Smaller land","Larger land")
+
+
+t.big <- do.call("rbind", list(t.o, t.csa, t.csv, t.pg, t.fh, t.uq, t.bl))
+colnames(t.big)[colnames(t.big) == 'Group'] <- ''
+library(kableExtra)
+
+kable(format = "latex", t.big, booktabs= T, caption = "Group Variables",digits = 3) %>% 
+  kable_styling() %>%
+  # add_header_above(c(" " = 1))
+  pack_rows(index=c(" " = 1, "Participation" = 4, "Participation Overlap" = 4, "Household Head Gender" = 2, "Income" = 2, "Plot size" = 2))%>% 
+  kable_styling(latex_options = "striped")
+```
+```{r anova, include=FALSE}
+library(car)
+
+at.cv <- aov(CV ~ 
+             femalehh
+                + CSA*
+               CSV
+             # + usecount
+             + bigland
+                    + upperquint
+                , data = hhchars)
+#2
+ant.cv <-
+  Anova(at.cv, type = 2)
+
+#CSA significant at 10% level 
+
+at.mi <- aov(mmoInc ~ 
+               femalehh
+                + 
+               CSA*
+               CSV
+                # + upperquint
+             # + usecount
+             + bigland
+                , data = hhchars)
+#3
+ant.mi <-
+  Anova(at.mi, type = 2)
+
+#CSA, CSV, significant at 5%; quintile at 0, makes sense
+
+at.persistent <- aov(persistent ~ 
+                femalehh 
+             + CSA
+             * CSV 
+              + bigland
+               + upperquint
+                , data = hhchars)
+#4
+ant.persistent <-
+  Anova(at.persistent, type = 2)
+
+at.persistento <- aov(persistent ~ 
+                femalehh 
+             + CSA
+             * CSV 
+              + bigland
+               # + upperquint
+                , data = hhchars)
+#5
+ant.persistento <-
+  Anova(at.persistento, type = 2)
+#   
+# at.csa <- aov(CSA ~ 
+#                 femalehh 
+#               * bigland 
+#                * upperquint +
+#                 CSV
+#                 , data = hhchars)
+# 
+# ant.csa <- Anova(at.csa, type = 2)
+
+#CSA Use
+at.csau <- aov(usecount ~ 
+             femalehh
+                + CSV
+             + bigland
+                    + upperquint
+                , data = hhchars)
+#7
+ant.csau <-
+  Anova(at.csau, type = 2)
+```
+```{r usecount}
+at.cvuc <- aov(CV ~ 
+             femalehh
+                +CSV
+             * usecount
+             + bigland
+                    + upperquint
+                , data = hhchars)
+#8
+ant.cvuc <-
+  Anova(at.cvuc, type = 2)
+
+at.miuc <- aov(mmoInc ~ 
+               femalehh
+                + 
+               CSV
+                # + upperquint
+             *usecount
+             + bigland
+                , data = hhchars)
+#9
+ant.miuc <-
+  Anova(at.miuc, type = 2)
+
+at.persistuc <- aov(persistent ~ 
+                femalehh 
+             + CSV
+             *usecount
+              + bigland
+               + upperquint
+                , data = hhchars)
+#10
+ant.persistuc <-
+  Anova(at.persistuc, type = 2)
+```
+
+```{r probit}
+#probit of CSA
+pt.csa <- glm(CSA ~ 
+                femalehh
+                + CSV
+              + bigland  
+              + upperquint
+                , family = binomial(link = "probit"),
+              data = hhchars)
+summary(pt.csa)
+
+#MOST EFFICIENT AIC 149
+
+# pt.csa <- glm(CSA ~
+#                 femalehh*upperquint
+#                 + CSV
+#               # + bigland
+#               + upperquint
+#                 , family = binomial(link = "probit"),
+#               data = hhchars)
+# summary(pt.csa)
+
+
+
+#wald test 
+library(aod)
+wald.test(b = coef(pt.csa), Sigma = vcov(pt.csa), Terms = 4)
+
+
+```
+
+
+```{r printtables}
+
+# latex(round(Anova(at.csa, type="II"), digits=4),
+#       file="testtable", title="", booktabs=TRUE,
+#       caption="Type II ANOVA table for the gender and education data",
+#       label="tab:t2anova", size ="small", math.col.names=TRUE)
+
+#CV
+
+kable(format = "latex",round(Anova(at.cv, type="II"), digits=3), booktabs= T, caption = "ANOVA of CV", align = "c", linesep = ' ')
+
+#Income
+kable(format = "latex",round(Anova(at.mi, type="II"),digits = 3),  booktabs= T, caption = "ANOVA of Mean income", align = "c", linesep = ' ')
+
+#Persistence
+kable(format = "latex",round(Anova(at.persistent, type="II"), digits=3), caption = "ANOVA of Poverty Persistence", booktabs= T, align = "c", linesep = ' ')
+
+kable(format = "latex",round(Anova(at.persistento, type="II"), digits=3), caption = "ANOVA of Poverty Persistence, Income Groups Omitted", booktabs= T, align = "c", linesep = ' ')
+
+#CSA, PROBIT
+library(huxtable)
+kable(format = "latex", tidy(pt.csa), digits=3, caption = "Probit of CSA Participation", booktabs= T, align = "c", linesep = ' ', ) %>% 
+  kable_styling(full_width = F) %>%
+  footnote(general = "Wald Chi-squared test: X2 = 0.45, df = 1, P(> X2) = 0.5", general_title = "",
+           title_format = "italic",
+           footnote_as_chunk = T)
+
+#Usecount
+kable(format = "latex",round(Anova(at.csau, type="II"),digits = 3),  booktabs= T, caption = "ANOVA of CSA Use", align = "c", linesep = ' ')
+```
+
+```{r tableuse, echo=FALSE}
+#CV
+kable(format = "latex",round(Anova(at.cvuc, type="II"), digits=3), booktabs= T, caption = "ANOVA of CV", align = "c", linesep = ' ')
+
+#Income
+kable(format = "latex",round(Anova(at.miuc, type="II"),digits = 3),  booktabs= T, caption = "ANOVA of Mean income", align = "c", linesep = ' ') 
+
+#Persistence
+kable(format = "latex",round(Anova(at.persistuc, type="II"), digits=3), caption = "ANOVA of Poverty Persistence", booktabs= T, align = "c", linesep = ' ')
+
+```
+
+```{r largeteable of p}
+pt.2 <- ant.cv %>% select(4) %>% na.omit() %>% rename("CV (2)" = "Pr(>F)")
+pt.8 <- ant.cvuc %>% select(4)%>% na.omit() %>% rename("CV (8)" = "Pr(>F)")
+pt.3 <- ant.mi %>% select(4)%>% na.omit() %>% rename("Income (3)" = "Pr(>F)")
+pt.9 <- ant.miuc %>% select(4)%>% na.omit() %>% rename("Income (9)" = "Pr(>F)")
+pt.4 <- ant.persistent %>% select(4)%>% na.omit() %>% rename("Poverty (4)" = "Pr(>F)")
+pt.5 <- ant.persistento %>% select(4)%>% na.omit() %>% rename("Poverty (5)" = "Pr(>F)")
+pt.10 <- ant.persistuc %>% select(4)%>% na.omit() %>% rename("Poverty (10)" = "Pr(>F)")
+pt.7 <- ant.csau %>% select(4)%>% na.omit() %>% rename("CSA Use (7)" = "Pr(>F)")
+
+
+
+pt.main <- merge(pt.2, pt.8, by = 0, all = TRUE)
+pt.main2 <- merge(pt.3, pt.9, by = 0, all = TRUE)
+pt.main <- merge(pt.main, pt.main2, by = 1, all = TRUE)
+pt.main2 <- merge(pt.4, pt.5, by = 0, all = TRUE)
+pt.main <- merge(pt.main, pt.main2, by = 1, all = TRUE)
+pt.main2 <- merge(pt.10, pt.7, by = 0, all = TRUE)
+pt.main <- merge(pt.main, pt.main2, by = 1, all = TRUE)
+
+rownames(pt.main) <- pt.main[,1]
+options(knitr.kable.NA = '-')
+pt.main <- pt.main %>% select(-c(1))
+
+# library(pander)
+# idk <- add.significance.stars(pt.main, cutoffs = c(0.05, 0.01, 0.001))
+kable(format = "latex", round(pt.main, digits = 3), caption = "P-Values of ANOVA Tests", booktabs = T, linesep = '',align = "r") %>% 
+  kable_styling(latex_options = "striped")
+
+# library(papeR)
+# tprettify(ant.csa,smallest.pval = 0.001, digits = NULL, scientific = FALSE)
+
+# stargazer(pt.main, type = "latex", notes = "<em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em>", notes.append = F)
+```
+F tests, but assume normal distribution, unlikely
+```{r ftest, include=FALSE}
+ft.cvcsa <- var.test(CV ~ CSA, data = hhchars)
+ft.cvcsa
+
+ft.cvcsv <- var.test(CV ~ CSV, data = hhchars)
+ft.cvcsv
+
+ft.pscsa <- var.test(povshare ~ CSV, data = hhchars)
+ft.pscsa
+
+ft.pscsv <- var.test(povshare ~ CSV, data = hhchars)
+ft.pscsv
+
+ft.micsa <- var.test(mmoInc ~ CSA, data = hhchars)
+ft.micsa
+#significant at 5%
+
+ft.micsv <- var.test(mmoInc ~ CSV, data = hhchars)
+ft.micsv
+#Significant
+
+
+```
+
+
+##Plots
+
+Poverty count by participation group
+```{r pfcsap, echo=FALSE}
+library(ggplot2)
+library(ggthemes)
+library(ggridges)
+# Poverty count by participation group====
+p.pfcsap <- ggplot(hhchars, aes(x = povcount, fill = as.character(partGroup))) +
+  geom_bar() +
+  facet_wrap(~partGroup, 
+             labeller = labeller(partGroup = partGroup.names)
+             ) +
+  theme_fivethirtyeight() +
+  xlab("Number of Months Under Poverty Line") +
+  ylab("Number of Households") + 
+  theme(legend.title = element_text(size=10, face="bold")) +
+  scale_fill_discrete(name = "Participation", labels = partGroup.names) 
+
+p.pfcsap
+```
+
+Participation group by initial income
+
+```{r csapiinc, echo=FALSE}
+
+# participation group by initial income====
+p.csapiinc <- Income %>% filter(dateFloor == "2019-03-01") %>% 
+  ggplot(Income, mapping =  aes(x = CSA, y = log(moInc), group = CSA, fill = factor(CSA))) +
+  geom_boxplot() +
+  theme_fivethirtyeight()+
+  # theme(axis.title = element_text()) +
+  scale_x_discrete(name = "") +
+  theme(axis.title = element_text()) +
+  scale_fill_discrete(name = "CSA Participation", labels = CSA.names)+
+  labs(y = "Log Income (KSh)", fill = "CSA Participation", 
+       title = "Initial Month Income, by CSA")
+
+  # xlab("Number of Months Under Poverty Line") +
+  # ylab("Number of Households") + 
+  # theme(legend.title = element_text(size=10, face="bold"))
+# + scale_fill_discrete(name = "Participation", labels = partGroup.names) 
+
+p.csapiinc
+
+t.csapiinc <- Income %>% filter(dateFloor == "2019-03-01") %>%
+  group_by(CSA) %>% 
+  summarise(mInc = mean(moInc),
+            medInc = median(moInc),
+            count = n())
+# idk <- Income %>% filter(dateFloor == "2019-03-01") %>% median(obs)
+t.csapiinc 
+ 
+# at.csapiinc <- aov()
+
+# ct.csapiinc
+# at.csapiinc <- aov(CSA ~ count 
+#                 , data = t.csapiinc)
+# summary(at.csapiinc)
+# # ant.cv <-
+#   Anova(t.csapiinc, type = 2)
+
+  
+```
+
+
+Income box plots over each month with poverty line
+```{r qiinc, echo=FALSE}
+
+# quintile group by initial income====
+
+
+p.qiinc <- Income %>% 
+  ggplot(Income, mapping =  aes(x = quintile, y = log(moInc), group = quintile)) +
+  geom_boxplot() +
+  facet_grid(~dateFloor, 
+             # labeller = labeller(dateFloor = month)
+             )+
+  geom_hline(yintercept = log(q[2]), color = "red") +
+  theme_fivethirtyeight()
+  # xlab("Number of Months Under Poverty Line") +
+  # ylab("Number of Households") + 
+  # theme(legend.title = element_text(size=10, face="bold")) + 
+  # scale_fill_discrete(name = "Participation", labels = partGroup.names)
+
+p.qiinc
+
+```
+
+Share of households by number of months spent under pov line, by CSA participation
+```{r spfcsap, echo=FALSE}
+
+#Share of households by number of months spent under pov line, by CSA participation =====
+# idk <- hhchars %>% group_by(partGroup) %>%  count(povcount)
+# 
+# idk <- idk %>% mutate(gfreq = sum(n))
+# 
+# 
+# p.spfcsap <- ggplot(idk, aes(x = povcount, y = n/gfreq, fill = as.character(partGroup))) +
+#   geom_bar(position = "stack") +
+#   theme_linedraw() +
+#   xlab("Number of Months Under Poverty Line") +
+#   ylab("Number of Households") + 
+#   theme(legend.title = element_text(size=10, face="bold")) +
+#   scale_fill_discrete(name = "Participation", labels = partGroup.names) 
+# 
+# p.spfcsap
+# =====
+p.spfcsap <- ggplot(hhchars, aes(povcount, group = partGroup)) + 
+  geom_bar(aes(y = ..prop.., fill = factor(..x..)), stat="count") +
+  theme_fivethirtyeight() +
+  scale_y_continuous(labels=scales::percent) +
+  facet_grid(~partGroup, labeller = labeller(partGroup = partGroup.names)) +
+  labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Months", 
+       title = "Duration in Poverty by Share of Houseolds, by CSA Participation") 
+p.spfcsap
+
+#density version
+p.spfcsapd <- ggplot(hhchars, aes(povcount, group = partGroup, fill = factor(partGroup))) + 
+  geom_density(
+    # alpha  = 0.4, 
+    position="stack",
+    adjust = 3/4
+    # 7/10
+    ) +
+  theme_fivethirtyeight() +
+  labs(y = "Relative Frequency", 
+       title = "Duration in Poverty by Share of Houseolds, by Participation",
+       x = "Months in Poverty") +
+  scale_fill_discrete(name = "Pariticpation Group", labels = partGroup.names) +
+  scale_y_continuous(labels=scales::percent) +
+  theme(axis.title = element_text()) 
+p.spfcsapd
+# =====
+#ridges
+# p.spfcsapd <- ggplot(hhchars, aes(povcount, y = partGroup, color = factor(partGroup),fill = factor(partGroup))) +
+#   geom_density_ridges() +
+  # theme_fivethirtyeight() +
+  # labs(y = "Relative Frequency", 
+  #      title = "Duration in Poverty by Share of Houseolds, by CSA Participation",
+  #      x = "Months in Poverty") +
+  # scale_fill_discrete(name = "Pariticpation Group", labels = partGroup.names) +
+  # scale_y_continuous(labels=scales::percent) +
+  # theme(axis.title = element_text()) 
+# p.spfcsapd
+###Stacked Bar
+
+p.spfstack <- 
+  ggplot(hhchars, aes(povcount, group = partGroup, fill = factor(partGroup))) + 
+    geom_bar(aes(y = ..prop..),position="stack", stat="count") +
+  scale_y_continuous(labels=scales::percent)
+p.spfstack
+
+p.spfstackq <- 
+  ggplot(hhchars, aes(povcount, group = quintile, fill = factor(quintile))) + 
+    geom_bar(aes(y = ..prop..),position="stack", stat="count") +
+  scale_y_continuous(labels=scales::percent)
+p.spfstackq
+```
+kernel can be found here https://rdrr.io/r/stats/density.html
+
+By only CSA
+```{r spfcsa, echo=FALSE}
+#By only CSA
+p.spfcsa <- ggplot(hhchars, aes(povcount, group = CSA)) + 
+  geom_bar(aes(y = ..prop.., fill = factor(..x..)), stat="count") +
+  theme_fivethirtyeight() +
+  scale_y_continuous(labels=scales::percent) +
+  facet_grid(~CSA
+             , labeller = labeller(CSA = CSA.names)
+             ) +
+  labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Months", 
+       title = "Duration in Poverty by Share of Houseolds, by CSA") 
+p.spfcsa
+
+#density version
+#danwidth set to 1/2 of default 
+
+p.spfcsad <- ggplot(hhchars, aes(povcount, group = CSA, fill = factor(CSA))) + 
+  geom_density(alpha = 0.4, 
+               adjust = 
+                 # 1/2
+               7/10) +
+  theme_fivethirtyeight() +
+  scale_y_continuous(labels=scales::percent) +
+  labs(y = "Relative Frequency", x = "Months in Poverty", fill = "CSA Participation", 
+       title = "Duration in Poverty by Share of Houseolds, by CSA") +
+  scale_fill_discrete(name = "CSA Participation", labels = CSA.names) +
+  theme(axis.title = element_text())
+
+p.spfcsad
+
+
+```
+
+By only CSV
+```{r spfcsv, echo=FALSE}
+#By only CSV
+p.spfcsv <- ggplot(hhchars, aes(povcount, group = CSV)) + 
+  geom_bar(aes(y = ..prop.., fill = factor(..x..)), stat="count") +
+  theme_fivethirtyeight() +
+  scale_y_continuous(labels=scales::percent) +
+  facet_grid(~CSV
+             , labeller = labeller(CSV = CSV.names)
+  ) +
+  labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Months", 
+       title = "Duration in Poverty by Share of Houseolds, by CSV") 
+p.spfcsv
+
+#density version
+
+p.spfcsvd <- ggplot(hhchars, aes(povcount, group = CSV, fill = factor(CSV))) + 
+  geom_density(alpha = 0.4, adjust = 
+                 # 1/2
+               7/10
+               ) +
+  theme_fivethirtyeight() +
+  scale_y_continuous(labels=scales::percent) +
+  labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Months", 
+       title = "Duration in Poverty by Share of Houseolds, by CSV") 
+p.spfcsvd
+
+```
+
+Share of households by number of months spent under pov line, by income quintile
+
+```{r spfq, echo=FALSE}
+#Share of households by number of months spent under pov line, by income quintile====
+
+#create naming for quintiles
+
+quintile.names <- c("First Quintile", "Second Quintile", "Third Quintile", "Fourth Quintile", "Fifth Quintile")
+quintile.numbers <- 1:5
+
+names(quintile.names) <- quintile.numbers
+
+quintile.index <- data.frame(quintile.numbers, quintile.names)
+
+
+p.spfq <- ggplot(hhchars, aes(povcount, group = quintile)) + 
+  geom_bar(aes(y = ..prop.., fill = factor(..x..), stat="count")) + 
+  scale_y_continuous(labels=scales::percent) +
+  # theme_grey() +
+  facet_grid(~quintile, labeller = labeller(quintile = quintile.names)) +
+  labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Months", 
+       title = "Duration in Poverty by Share of Houseolds, by Income Quintile") 
+p.spfq
+
+#Density
+
+p.spfqd <- ggplot(hhchars, aes(povcount, 
+                               group = quintile, fill = factor(quintile))) + 
+  geom_density(
+    # alpha = 0.4,
+     position="stack",
+               adjust = 3/4) + 
+  scale_y_continuous(labels=scales::percent) +
+  theme_fivethirtyeight() +
+  # facet_grid(~quintile, labeller = labeller(quintile = quintile.names)) +
+  labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Quintile", 
+       title = "Duration in Poverty by Share of Houseolds, by Income Quintile") +
+  theme(axis.title = element_text())
+
+# ggplot(hhchars, aes(povcount, group = CSV, fill = factor(CSV))) + 
+#   geom_density(alpha = 0.4, adjust = 1/2) +
+#   theme_fivethirtyeight() +
+#   scale_y_continuous(labels=scales::percent) +
+#   labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Months", 
+#        title = "Duration in Poverty by Share of Houseolds, by CSV") 
+
+p.spfqd
+```
+
+Gridding both CSA and Quintile
+
+```{r spfcq, echo=FALSE, include=FALSE}
+#Gridding both CSA and Quintile====
+
+# p.spfcq <- ggplot(hhchars, aes(povcount)) + 
+#   geom_bar(aes(y = ..prop.., fill = factor(..x..), stat="count")) + 
+#   scale_y_continuous(labels=scales::percent) +
+#   theme_fivethirtyeight() +
+#   facet_grid(partGroup~quintile, labeller = labeller(quintile = quintile.names)) +
+#   labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Months", 
+#        title = "Duration in Poverty by Share of Houseolds")
+# p.spfcq
+
+#density version
+# =====
+p.spfcqd <- ggplot(hhchars, aes(povcount)) + 
+  geom_density() + 
+  scale_y_continuous(labels=scales::percent) +
+  theme_fivethirtyeight() +
+  facet_grid(partGroup~quintile, labeller = labeller(quintile = quintile.names)) +
+  labs(y = "Relative Frequency", x = "Months in Poverty", fill = "Months", 
+       title = "Duration in Poverty by Share of Houseolds")
+p.spfcqd
+```
+##CV Plots
+CV by quintile group
+
+```{r pcvq, echo=FALSE}
+#CV by quintile group
+p.pcvq <- ggplot(c.metrics, aes(x = CSA, y = mCV, fill=factor(CSA))) + 
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_fivethirtyeight() +
+  facet_grid(~quintile, labeller = labeller(quintile = quintile.names)) +
+  labs(y = "Mean CV", x = "Participation", fill = "CSA", 
+       title = "Mean CV, by Income Quintile")
+p.pcvq
+```
+
+CV by participation group
+
+```{r pcvp, echo=FALSE}
+#CV by participation group
+p.pcvp <- ggplot(c.metrics, aes(x = quintile, y = mCV )) + 
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_fivethirtyeight() +
+  facet_grid(~CSA, labeller = labeller(CSA = CSA.names)) +
+  labs(y = "CV", x = "Income Quintile", fill = "Months", 
+       title = "Mean CV, by income, grouped by participation") 
+p.pcvp
+
+```
+```{r pcvcsv, echo=FALSE}
+#CV by participation group
+p.pcvcsv <- ggplot(c.metrics, aes(x = quintile, y = mCV, fill = factor(quintile) )) + 
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_fivethirtyeight() +
+  facet_grid(~CSV, labeller = labeller(CSV = CSV.names)) +
+  labs(y = "CV", x = "Income Quintile", fill = "Quintile", 
+       title = "Mean CV, by income, grouped by CSV")  +
+  theme(axis.title = element_text())
+p.pcvcsv
+
+# table(hhchars$quintile, hhchars$CSV)
+```
+
+```{r pcvcsv2, echo=FALSE, include=FALSE}
+#CV by participation group
+p.pcvcsa <- ggplot(c.metrics, aes(x = quintile, y = mCV, fill = factor(quintile) )) + 
+  geom_bar(position = "dodge", stat = "identity") +
+  theme_fivethirtyeight() +
+  facet_grid(~CSA, labeller = labeller(CSA = CSA.names)) +
+  labs(y = "CV", x = "Income Quintile", fill = "Quintile", 
+       title = "Mean CV, by income, by CSA participation")  +
+  theme(axis.title = element_text())
+p.pcvcsa
+
+# table(hhchars$quintile, hhchars$CSV)
+```
+Non-grouped Cv, by quintile
+
+```{r cvq, echo=FALSE}
+
+#Non-grouped Cv, by quintile
+p.cvq <- ggplot(c.metrics, aes(x = as.factor(quintile), y = mCV )) + 
+  geom_bar(position = "dodge", stat = "identity", aes(fill = factor(quintile))) +
+  scale_x_discrete(labels = quintile.names) +
+  theme_fivethirtyeight() +
+#   facet_grid(~partGroup, labeller = labeller(partGroup = partGroup.names)) +
+  labs(y = "CV", x = "Income Quintile", fill = "Quintile", 
+       title = "Mean CV, by Quintile") + 
+  theme(legend.position = "none") 
+# + legend(legend = FALSE)
+p.cvq
+```
+
+Non-grouped Cv, by participation
+
+```{r cvp, echo=FALSE}
+
+#Non-grouped Cv, by partic
+p.cvp <- ggplot(pg.metrics, aes(x = as.factor(partGroup), y = mCV )) + 
+  geom_bar(position = "dodge", stat = "identity", aes(fill = factor(partGroup))) +
+  scale_x_discrete(labels = partGroup.names) +
+  theme_fivethirtyeight() +
+  labs(y = "CV", x = "Income Quintile", fill = "Months", 
+       title = "Mean CV, by Participation Group") +
+  theme(legend.position='none')+
+  theme(axis.title = element_text())
+  
+p.cvp
+```
+Mean CV by CSA
+
+```{r cvcsa, echo=FALSE}
+
+#Mean CV by CSA
+p.cvcsa <- ggplot(metrics.csa, aes(x = as.factor(CSA), y = mCV )) + 
+  geom_bar(position = "dodge", stat = "identity", aes(fill = factor(CSA))) +
+  scale_x_discrete(labels = CSA.names) +
+  theme_fivethirtyeight() +
+  labs(y = "CV", x = "CSA Participation", fill = "Months", 
+       title = "Mean CV, by CSA Group")  +
+  theme(legend.position='none')
+  
+p.cvcsa
+```
+
+Mean CV by CSV
+
+```{r cvcsv, echo=FALSE}
+
+#Mean CV by CSV
+p.cvcsv <- ggplot(metrics.csv, aes(x = as.factor(CSV), y = mCV )) + 
+  geom_bar(position = "dodge", stat = "identity", aes(fill = factor(CSV))) +
+  scale_x_discrete(labels = CSV.names) +
+  theme_fivethirtyeight() +
+  labs(y = "CV", fill = "Months", 
+       title = "Mean CV, by CSV") +
+  theme(legend.position='none')
+  
+p.cvcsv
+```
+
+```{r pfcv, echo=FALSE}
+
+p.pfcv <- ggplot(hhchars, mapping =  aes(x = povcount, y = CV, group = povcount)) + 
+  geom_boxplot()  +
+  theme_fivethirtyeight() +
+  geom_smooth(method='lm'
+              # , aes(group=1)
+              # , formula = y~poly(x,3)
+              ) +
+  # scale_y_continuous(labels=scales::percent) +
+  # facet_grid(~partGroup
+             # , labeller = labeller(partGroup = partGroup.names)) +
+  labs(y = "CV", x = "Months in Poverty", fill = "Months",
+       title = "CV by Poverty Persistence")
+p.pfcv
+
+```
+
+```{r pfmcv, echo=FALSE, include=FALSE}
+
+p.pfmcv <- ggplot(hhchars, mapping =  aes(x = povshare, y = CV)) + 
+  geom_point(stat = 'identity', aes(color = factor(partGroup)))  +
+  theme_fivethirtyeight() +
+  geom_smooth(method='lm'
+              # , aes(group=1)
+              # , formula = y~poly(x,3)
+              ) +
+  scale_x_continuous(labels=scales::percent) +
+  # facet_grid(~partGroup
+             # , labeller = labeller(partGroup = partGroup.names)) +
+  labs(y = "CV", x = "Share of Months in Poverty", fill = "Months",
+       title = "CV by Poverty Persistence")
+p.pfmcv
+
+```
+
+
+```{r pfcvd, echo=FALSE}
+# CV by Poverty Persistence
+p.pfcvd <- ggplot(hhchars, aes(x = povcount, y = CV)) + 
+  geom_point(stat = 'identity', aes(color = factor(partGroup))) +
+  # theme_fivethirtyeight() +
+  geom_smooth(method='lm'
+              # , formula = y~poly(x,3)
+              ) +
+  facet_grid(~partGroup
+             , labeller = labeller(partGroup = partGroup.names)) +
+  labs(y = "CV", x = "Months in Poverty", fill = "Months",
+       title = "CV by Poverty Persistence") 
+
+p.pfcvd
+
+
+```
+
+```{r mmicv, echo=FALSE}
+
+p.mmicv <- ggplot(hhchars, aes(x = log(mmoInc), y = CV)) + 
+  geom_point(stat = 'identity', aes(color = factor(partGroup))) +
+  theme_fivethirtyeight() +
+  # facet_grid(~partGroup
+             # , labeller = labeller(partGroup = partGroup.names)) +
+  geom_smooth(method='lm'
+              , formula = y~poly(x,1)
+              ) +
+  labs(y = "CV", x = "Income", fill = "Months",
+       title = "CV by log Mean Income") 
+p.mmicv
+```
+
+```{r mmipf, echo=FALSE, include=FALSE}
+
+p.mmipf <- ggplot(hhchars, mapping =  aes(y = log(mmoInc), x = povcount, group = povcount)) + 
+  geom_boxplot() +
+  theme_fivethirtyeight() +
+  # facet_grid(~partGroup
+             # , labeller = labeller(partGroup = partGroup.names)) +
+  geom_smooth(method='lm'
+              , formula = y~poly(x,1)
+              ) +
+  labs(y = "CV", x = "Income", fill = "Months",
+       title = "Poverty persistence by log Mean Income") 
+p.mmipf
+```
+
+Here's the same thing, but using household monthly income instead of the mean of them. Note: this means more observations of different income levels, but the same poverty persistence for each household, so we're just increasing the density of observations for incomes, based on endline poverty measures.
+```{r mipf, echo=FALSE}
+
+p.mipf <- ggplot(Income, mapping =  aes(y = log(moInc), x = povcount, group = povcount)) + 
+  geom_boxplot() +
+  theme_fivethirtyeight() +
+  # facet_grid(~partGroup
+             # , labeller = labeller(partGroup = partGroup.names)) +
+  geom_smooth(method='lm'
+              , formula = y~poly(x,1), aes(fill = "blue")
+              ) +
+  labs(y = "CV", x = "Income", fill = "Months",
+       title = "Poverty persistence by log Income") 
+p.mipf
+
+
+```
+```{r micv, echo=FALSE}
+p.qcv <- ggplot(hhchars, mapping =  aes(y = CV, x = quintile, group = quintile)) + 
+  geom_boxplot() +
+  theme_fivethirtyeight() +
+  # facet_grid(~partGroup
+             # , labeller = labeller(partGroup = partGroup.names)) +
+  labs(y = "CV", x = "Quintile",
+       title = "CV by Quintile") 
+p.qcv
+```
+
+
+
+```{r citations}
+citation()
+citation("dplyr")
+citation("tidyr")
+citation("knitr")
+citation("ggplot2")
+citation("haven")
+citation("ggthemes")
+
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+

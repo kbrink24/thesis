@@ -1,0 +1,2772 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Thesis},
+  pdfauthor={Kyle Brinkman},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\title{Thesis}
+\author{Kyle Brinkman}
+\date{6/25/2020}
+
+\begin{document}
+\maketitle
+
+\hypertarget{s8a_hh_income}{%
+\subsection{S8A\_hh\_income}\label{s8a_hh_income}}
+
+Here we have data on household income sources by person. we tie this to
+hhid to apply into the larger FD set
+
+Household income sources, descriptions taken from ``Baseline survey
+correct names'' Kindly explain the major sources of income are for the
+household. Could you please provide an estimate of the contribution of
+different household members in total household income in the past 12
+months Main income of the household S8Aq1 Husband S8Aq2 Wife S8Aq3
+Children S8Aq4 Other S8Aq5 Specify S8Aq6
+
+For Aq1, Likely who does most work 1=adult males in household, 2=adult
+females in household, 3=male children in household, 4=female children in
+household, 5= male/female children in household, 6=hired labor,
+-66=other, specify
+
+\#\#Demographic data
+
+descriptions taken from ``Baseline survey correct names''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S2_hh_demography <-}\StringTok{ }\KeywordTok{read_dta}\NormalTok{(}\StringTok{"Kenya_FD_materials/BaselineSurvey/S2_hh_demography.dta"}\NormalTok{)}
+
+\CommentTok{# length(unique(S2_hh_demography$hhid))}
+\CommentTok{#122 unique households, there are 120 hhids in the entire full set.}
+
+\CommentTok{#Getting HH Head }
+\NormalTok{hhhead <-}\StringTok{ }\NormalTok{S2_hh_demography }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(S2q9 }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(}\DataTypeTok{hhid =}\NormalTok{ hhid,}
+         \DataTypeTok{gender =}\NormalTok{ S2q2,}
+         \DataTypeTok{age =}\NormalTok{ S2q3,}
+         \DataTypeTok{maritalstatus =}\NormalTok{ S2q10,}
+         \DataTypeTok{job1 =}\NormalTok{ S2q5,}
+         \DataTypeTok{job2 =}\NormalTok{ S2q6}
+\NormalTok{         )}
+\CommentTok{#getting hh composition by age, gender, and place in hh}
+\NormalTok{hhcomp <-}\StringTok{ }\NormalTok{S2_hh_demography }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(}\DataTypeTok{hhid =}\NormalTok{ hhid,}
+         \DataTypeTok{gender =}\NormalTok{ S2q2,}
+         \DataTypeTok{age =}\NormalTok{ S2q3,}
+         \DataTypeTok{hhrelation =}\NormalTok{ S2q9}
+\NormalTok{         )}
+\CommentTok{#using age to set weigth of individual}
+\NormalTok{hhcomp <-}\StringTok{ }\NormalTok{hhcomp }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(hhid) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{weight =} \KeywordTok{ifelse}\NormalTok{(age}\OperatorTok{<}\DecValTok{5}\NormalTok{, }\FloatTok{0.26}\NormalTok{, }\KeywordTok{ifelse}\NormalTok{(age }\OperatorTok{>=}\StringTok{ }\FloatTok{4.99} \OperatorTok{&}\StringTok{ }\NormalTok{age }\OperatorTok{<}\StringTok{ }\DecValTok{15}\NormalTok{, }\FloatTok{0.65}\NormalTok{,}\DecValTok{1}\NormalTok{)))}
+\CommentTok{#now set household weight by the individuals residing in it}
+\NormalTok{hhcomp <-}\StringTok{ }\NormalTok{hhcomp }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(hhid) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{wcap =} \KeywordTok{sum}\NormalTok{(weight),}
+         \DataTypeTok{cap =} \KeywordTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+These codes will be used to isolate the sample to CSA-able income
+generating activities assigned to hhids
+
+Gender: Male=1 / Female=2 S2Aq2 Age (years) S2Aq3 Highest level of
+education attained (code A)S2Aq4 Primary occupation (code B)S2Aq5
+Secondary occupation (code B)S2Aq6 Labor contribution to occupations
+(code C){[}prim{]}S2Aq7 How many months has {[}name{]} been in location
+in past year? S2Aq8 Relation to HH (code D) S2Aq9 Marital status
+(\textgreater12yrs)(code E)S2Aq10
+
+Codes A: 1 = No formal schooling, 2 = Primary incomplete, 3 = Primary
+complete, 4 = Secondary incomplete, 5 = Secondary complete, 6 = Tertiary
+/university incomplete, 7 = tertiary/University complete, 8 =Adult
+education incomplete, 9 = Adult education complete, 10 = Don't know
+
+Codes B: 1=farming crop, 2=farming livestock, 3=salaried employment,
+4=self-employed off-farm, 5=casual laborer on-farm, 6=casual labored
+off-farm, 7=school/college, 8=non-school child, 9=herding, 10-household
+chores, 11=other, specify
+
+Codes C: 1=full time, 2=part time, 3=occasionally, 4=not a worker
+
+S2q9 Codes D: 1= Household head, 2= Spouse, 3= Son/daughter, 4= Parent
+living with son/daughter, 5= Son/daughter in-law, 6=Grandchild, 7= other
+relative, 8= Hired worker 9= Other, specify\_
+
+Codes E: 0=single, 1=married, 2=widowed, 3=divorced, 4=other, specify
+
+age groups 0-4 years are weighted as 0.24 of an adult, children aged
+5-14 years be weighted as 0.65 and all people aged 15 years and older be
+assigned a value of unity.
+
+\#\#Crop production
+
+Here we take crop production metrics such as size of plots and crop type
+by household
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S3A_crop_prod <-}\StringTok{ }\KeywordTok{read_dta}\NormalTok{(}\StringTok{"Kenya_FD_materials/BaselineSurvey/S3A_crop_prod.dta"}\NormalTok{)}
+
+\CommentTok{#This contains information on each household's plots, crops in them, the size, and who works them mainly}
+\NormalTok{crop_prod <-}\StringTok{ }\NormalTok{S3A_crop_prod }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(hhid, S3Aq1, S3Aq4, S3Aq5, S3Aq8) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{plotnumber =}\NormalTok{ S3Aq1,}
+         \DataTypeTok{crop =}\NormalTok{ S3Aq4,}
+         \DataTypeTok{cropsize =}\NormalTok{ S3Aq5,}
+         \DataTypeTok{mainworker =}\NormalTok{ S3Aq8) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(hhid) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{totalplot =} \KeywordTok{sum}\NormalTok{(cropsize),}
+         \DataTypeTok{plots =} \KeywordTok{length}\NormalTok{((}\KeywordTok{unique}\NormalTok{(plotnumber)))}
+\NormalTok{         )}
+
+\CommentTok{#We take the total size of land and number of plots each household has}
+\NormalTok{hhplots <-}\StringTok{ }\NormalTok{crop_prod }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(hhid, totalplot, plots) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{distinct}\NormalTok{()}
+
+\CommentTok{# summary(hhplots)}
+\CommentTok{# The median total plot size is 2 and the mean is slightly higher}
+\CommentTok{# p.plotsize <-}
+\CommentTok{#   ggplot(hhplots, aes(x = totalplot)) +}
+\CommentTok{#   geom_histogram() +}
+\CommentTok{#   geom_vline(aes(xintercept=3),}
+\CommentTok{#             color="blue", linetype="dashed", size=1)}
+\CommentTok{# p.plotsize}
+
+\CommentTok{# The distribution tapers off quickly after 3;there's one household, 101, which has a huge amount of land at 33}
+
+\CommentTok{#Here's a created indicator for a large amount of land use}
+\NormalTok{hhplots <-}\StringTok{ }\NormalTok{hhplots }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{bigland =} \KeywordTok{ifelse}\NormalTok{(totalplot }\OperatorTok{>}\StringTok{ }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+
+\CommentTok{# table(hhplots$bigland)}
+\end{Highlighting}
+\end{Shaded}
+
+122 farming households, ALL HHIDS are farmers mainworker is ``Who does
+the most work'', like S8 income source 1=adult males in household,
+2=adult females in household, 3=male children in household, 4=female
+children in household, 5= male/female children in household, 6=hired
+labor, -66=other, specify
+
+\#\#Financial Diary Data
+
+We'll first use FD data to create variables on CSA participation and CSV
+indicators
+
+\begin{verbatim}
+##       hhid           usecount    
+##  Min.   :  3.00   Min.   : 1.00  
+##  1st Qu.: 32.50   1st Qu.: 1.00  
+##  Median : 62.00   Median : 3.00  
+##  Mean   : 63.72   Mean   : 3.24  
+##  3rd Qu.: 94.50   3rd Qu.: 4.00  
+##  Max.   :122.00   Max.   :15.00
+\end{verbatim}
+
+33 non CSV, 87 CSV 45 non CSA, 75 CSA
+
+15 non CSV, non CSA 18 non CSV, CSA 30 CSV, non CSA 57 CSV, CSA
+
+let's create some group variables for each, make it easier later
+
+\#\#\#Idenitifying households CSV is bianary variable on if a hhid is in
+a CSV village So CSA participating hhids can be idenified by taking
+HHIDs with CSAWhat which are not NA. From there I can say the degree of
+CSA participation of a household. This allows for identifying the three
+groups of non-CSV, CSV CSAers, CSV non-CSAers. And if any, non-CSV
+CSAers
+
+\#\#Codes
+
+Variables FARMPROD `farm product' FARMQ `quantity of farm product'
+number of unit FARMUN `farm product unit' so acres, kilograms, meters
+etc CSAWHAT `what type of CSA' CSAQ `how much CSA' CSAUN `Unit of CSA'
+CSACOST `Costs of CSA' PURBUS `Purchases made for business?' SALBUS
+`Sales made for business?'
+
+CSAUnit is 29 unique
+
+CSA practices Most likely under CSAWhat
+
+CS01 ``High yielding varieties'' CS02 ``Improved seeds'' CS03 ``Early
+maturing varieties'' CS04 ``Drough tolerant varieties'' CS05 ``Pest and
+disease tolerant varieties'' CS06 ``Cross breeding Galla goat'' CS07
+``Cross breeding Red Masai sheep'' CS08 ``Fodder storage'' CS09
+``Intercropping'' CS10 ``Crop cover'' CS11 ``Micro catchment'' CS12
+``Ridges and bounds'' CS13 ``Hedges'' CS14 ``Fertilizer'' CS15 ``Manure
+and compost'' CS16 ``Mango trees planted'' CS17 ``Other trees planted''
+CS18 ``Improved poultry, rainbow or croilers'' CS24 ``Other activities''
+
+CSAWhat is likely what we want to use, 71780 rows including NA and 16
+other unique variables on CSA practice
+
+Loan type unique(FD\(LoanCreditType) length(unique(FD\)LoanCreditType))
+LoanCreditType variable TYPS loan types TY01 ``loan repayment received''
+TY02 ``credit repayment received'' TY03 ``money borrowed'' TY04 ``gift
+or remittances received'' TY05 ``advance payment received'' TY06 ``CBO
+share received'' TY07 ``loan repayment paid'' TY08 ``credit repayment
+paid'' TY09 ``money lent'' TY10 ``gift or remittances given'' TY11
+``advance paymetn paid'' TY12 ``CBO contribution paid''
+
+\hypertarget{income-subsetting}{%
+\subsection{Income Subsetting}\label{income-subsetting}}
+
+Here we need to create a set of incomes per household over the course of
+the study.
+
+So now we have positive, incoming transactions of all types, with
+indicators of their affiliation with CSA activity
+
+\#\#Time and months
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Income}\OperatorTok{$}\NormalTok{date <-}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{ymd}\NormalTok{(}\StringTok{"2019-03-05"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{weeks}\NormalTok{(Income}\OperatorTok{$}\NormalTok{WeekNr)}
+
+\CommentTok{#This gives the full date of each transaction based on the start date March 5th and given week number}
+\CommentTok{#When it comes to plotting, it should be done with full date format to make sure the breaks are at the correct place}
+\NormalTok{Income}\OperatorTok{$}\NormalTok{dateFloor <-}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{floor_date}\NormalTok{(Income}\OperatorTok{$}\NormalTok{date, }\DataTypeTok{unit =} \StringTok{"month"}\NormalTok{)}
+\NormalTok{Income}\OperatorTok{$}\NormalTok{month <-}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{month}\NormalTok{(Income}\OperatorTok{$}\NormalTok{date)}
+\NormalTok{Income}\OperatorTok{$}\NormalTok{year <-}\StringTok{ }\NormalTok{lubridate}\OperatorTok{::}\KeywordTok{year}\NormalTok{(Income}\OperatorTok{$}\NormalTok{date)}
+\CommentTok{#gives month set at the first and year}
+\CommentTok{#Here we will also put transactions within their given months, }
+\end{Highlighting}
+\end{Shaded}
+
+\#\#Variables calculated per month, income, observations, mean income,
+CV
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+Now to merge with the main set. Participation to income
+
+In this process we also take out households which we have little data on
+and might skew analysis due to not incorporating seasonal variation
+
+\#\#Quantiles
+
+Here we break down the households into equal quintiles of mean monthly
+income.
+
+\begin{verbatim}
+## # A tibble: 117 x 8
+##     hhid mmoInc sdmoInc    CV   CSV   CSA partGroup strata
+##    <dbl>  <dbl>   <dbl> <dbl> <dbl> <dbl>     <dbl>  <dbl>
+##  1     1  2690.   1659. 0.617     1     0         1      2
+##  2     2  5667.   3756. 0.663     1     0         1      3
+##  3     3  1933.   1565. 0.810     1     1         3      4
+##  4     4  6395.   8188. 1.28      1     1         3      2
+##  5     5  4759.   3882. 0.816     1     1         3      6
+##  6     6  7996.   3758. 0.470     1     1         3      6
+##  7     7  2411.   2003. 0.831     1     1         3      4
+##  8     8  2161.   1623. 0.751     0     0         0      8
+##  9     9  3012.   2178. 0.723     0     0         0      9
+## 10    10   645.    468. 0.726     0     0         0      9
+## # ... with 107 more rows
+\end{verbatim}
+
+\begin{verbatim}
+##      40% 
+## 2958.432
+\end{verbatim}
+
+\begin{verbatim}
+##      20% 
+## 1817.681
+\end{verbatim}
+
+From this we not only get households into quintile groups but the lines
+which divide them from eachother.
+
+Our poverty line will be between the second and third quintile, q{[}2{]}
+
+\#\#Poverty and poverty persistence
+
+\begin{verbatim}
+## # A tibble: 117 x 11
+##     hhid mmoInc sdmoInc    CV   CSV   CSA partGroup strata povcount   obs
+##    <dbl>  <dbl>   <dbl> <dbl> <dbl> <dbl>     <dbl>  <dbl>    <dbl> <int>
+##  1     1  2690.   1659. 0.617     1     0         1      2        8    13
+##  2     2  5667.   3756. 0.663     1     0         1      3        3    13
+##  3     3  1933.   1565. 0.810     1     1         3      4       10    13
+##  4     4  6395.   8188. 1.28      1     1         3      2        5    13
+##  5     5  4759.   3882. 0.816     1     1         3      6        4    13
+##  6     6  7996.   3758. 0.470     1     1         3      6        0    13
+##  7     7  2411.   2003. 0.831     1     1         3      4        9    13
+##  8     8  2161.   1623. 0.751     0     0         0      8       10    13
+##  9     9  3012.   2178. 0.723     0     0         0      9        6    13
+## 10    10   645.    468. 0.726     0     0         0      9       12    13
+## # ... with 107 more rows, and 1 more variable: povshare <dbl>
+\end{verbatim}
+
+\#\#Household metrics
+
+We track which households identify into each group and create variables
+by those groupings This includes in group CV and income. Additionally we
+count how many households fit into these groupings and sub groups.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hhchars <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(partGroup)}
+
+\NormalTok{pg.metrics <-}\StringTok{ }\KeywordTok{summarise}\NormalTok{(hhchars, }\DataTypeTok{mCV =} \KeywordTok{mean}\NormalTok{(CV),}
+                         \DataTypeTok{medianCV =} \KeywordTok{median}\NormalTok{(CV),}
+          \DataTypeTok{gmmoInc =} \KeywordTok{mean}\NormalTok{(mmoInc),}
+          \DataTypeTok{households =} \KeywordTok{n}\NormalTok{())}
+\NormalTok{pg.metrics <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(pg.metrics, partGroup.index, }\DataTypeTok{by =} \StringTok{"partGroup"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `partGroup` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#participation based metrics}
+
+\NormalTok{hhchars <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(quintile)}
+
+\NormalTok{q.metrics <-}\StringTok{ }\KeywordTok{summarise}\NormalTok{(hhchars, }\DataTypeTok{mCV =} \KeywordTok{mean}\NormalTok{(CV),}
+                       \DataTypeTok{medianCV =} \KeywordTok{median}\NormalTok{(CV),}
+          \DataTypeTok{gmmoInc =} \KeywordTok{mean}\NormalTok{(mmoInc),}
+          \DataTypeTok{households =} \KeywordTok{n}\NormalTok{())}
+\CommentTok{#income quintile based metrics}
+
+
+\NormalTok{hhchars <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(quintile, partGroup)}
+
+\NormalTok{c.metrics <-}\StringTok{ }\KeywordTok{summarise}\NormalTok{(hhchars, }\DataTypeTok{mCV =} \KeywordTok{mean}\NormalTok{(CV),}
+                       \DataTypeTok{medianCV =} \KeywordTok{median}\NormalTok{(CV),}
+          \DataTypeTok{gmmoInc =} \KeywordTok{mean}\NormalTok{(mmoInc),}
+          \DataTypeTok{households =} \KeywordTok{n}\NormalTok{())}
+
+\NormalTok{c.metrics <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(c.metrics, partGroup.index, }\DataTypeTok{by =} \StringTok{"partGroup"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `partGroup` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#for only csa and csv}
+\NormalTok{hhchars <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(CSA)}
+
+\NormalTok{metrics.csa <-}\StringTok{  }\KeywordTok{summarise}\NormalTok{(hhchars, }\DataTypeTok{mCV =} \KeywordTok{mean}\NormalTok{(CV),}
+                          \DataTypeTok{medianCV =} \KeywordTok{median}\NormalTok{(CV),}
+          \DataTypeTok{gmmoInc =} \KeywordTok{mean}\NormalTok{(mmoInc),}
+          \DataTypeTok{households =} \KeywordTok{n}\NormalTok{())}
+
+
+\NormalTok{hhchars <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(CSV)}
+
+\NormalTok{metrics.csv <-}\StringTok{  }\KeywordTok{summarise}\NormalTok{(hhchars, }\DataTypeTok{mCV =} \KeywordTok{mean}\NormalTok{(CV),}
+                          \DataTypeTok{medianCV =} \KeywordTok{median}\NormalTok{(CV),}
+          \DataTypeTok{gmmoInc =} \KeywordTok{mean}\NormalTok{(mmoInc),}
+          \DataTypeTok{households =} \KeywordTok{n}\NormalTok{())}
+
+
+\NormalTok{hhchars <-}\StringTok{ }\KeywordTok{ungroup}\NormalTok{(hhchars)}
+\CommentTok{#combined groupings of participation and quintile metrics. Far smaller in counts, but more granular}
+
+\CommentTok{#Now we incorporate quintile characteristics into the main set.}
+\NormalTok{trunk <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{  }\KeywordTok{select}\NormalTok{(hhid, quintile)}
+
+\NormalTok{Income <-}\StringTok{ }
+\StringTok{  }\KeywordTok{left_join}\NormalTok{(Income, trunk, }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{)}
+
+\NormalTok{Income }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(quintile)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,394 x 16
+## # Groups:   quintile [5]
+##     hhid dateFloor  moInc strata   obs mmoInc sdmoInc    CV   CSV   CSA
+##    <dbl> <date>     <dbl>  <dbl> <int>  <dbl>   <dbl> <dbl> <dbl> <dbl>
+##  1     1 2019-03-01 1775       2    13  2690.   1659. 0.617     1     0
+##  2     1 2019-04-01 3515       2    13  2690.   1659. 0.617     1     0
+##  3     1 2019-05-01 1422.      2    13  2690.   1659. 0.617     1     0
+##  4     1 2019-06-01 1545       2    13  2690.   1659. 0.617     1     0
+##  5     1 2019-07-01 6872.      2    13  2690.   1659. 0.617     1     0
+##  6     1 2019-08-01 2130       2    13  2690.   1659. 0.617     1     0
+##  7     1 2019-09-01 4260       2    13  2690.   1659. 0.617     1     0
+##  8     1 2019-10-01 2128.      2    13  2690.   1659. 0.617     1     0
+##  9     1 2019-11-01 2938.      2    13  2690.   1659. 0.617     1     0
+## 10     1 2019-12-01 4156.      2    13  2690.   1659. 0.617     1     0
+## # ... with 1,384 more rows, and 6 more variables: partGroup <dbl>, pov <dbl>,
+## #   povcount <dbl>, povshare <dbl>, month <chr>, quintile <int>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summarise}\NormalTok{(Income, }\DataTypeTok{minc =} \KeywordTok{mean}\NormalTok{(moInc))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##    minc
+##   <dbl>
+## 1 8113.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hhchars <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars, hhplots, }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hhchars <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars, hhhead, }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unique}\NormalTok{(hhchars}\OperatorTok{$}\NormalTok{gender)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2" "1" NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hhchars <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}
+  \DataTypeTok{femalehh =} \KeywordTok{as.numeric}\NormalTok{(gender) }\OperatorTok{-}\StringTok{ }\DecValTok{1}
+\NormalTok{)}
+\CommentTok{# table(hhchars$femalehh)}
+\CommentTok{#1 is female}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hhchars <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{persistent =} \KeywordTok{ifelse}\NormalTok{(povshare }\OperatorTok{>}\StringTok{ }\FloatTok{.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{  )}
+\CommentTok{#about half and half}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hhchars <-}\StringTok{ }\NormalTok{hhchars }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{upperquint =} \KeywordTok{ifelse}\NormalTok{(quintile }\OperatorTok{>}\StringTok{ }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{  )}
+\CommentTok{#about half and half}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hhchars <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars, CSAcount, }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{)}
+\NormalTok{hhchars}\OperatorTok{$}\NormalTok{usecount[}\KeywordTok{is.na}\NormalTok{(hhchars}\OperatorTok{$}\NormalTok{usecount)] <-}\StringTok{ }\DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggthemes)}
+\NormalTok{p.iuc <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(hhchars, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{log}\NormalTok{(mmoInc), }\DataTypeTok{y =}\NormalTok{ usecount, }\DataTypeTok{color =} \KeywordTok{factor}\NormalTok{(CSV))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_fivethirtyeight}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Income to CSA Usage"}\NormalTok{,}\DataTypeTok{y =} \StringTok{"CSA Use"}\NormalTok{, }\DataTypeTok{x =} \StringTok{"Log Mean Monthly Income"}\NormalTok{, }\DataTypeTok{color =} \StringTok{"CSV Status"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_discrete}\NormalTok{(}\DataTypeTok{name =} \StringTok{"CSV Status"}\NormalTok{, }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"non-CSV"}\NormalTok{, }\StringTok{"CSV"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.title =} \KeywordTok{element_text}\NormalTok{())}
+\NormalTok{p.iuc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{Main-2807_files/figure-latex/iuc-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hhcount <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars, hhwcap, }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{poorcount <-}\StringTok{ }\NormalTok{hhcount }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(quintile}\OperatorTok{<=}\DecValTok{2}\NormalTok{)}
+
+\KeywordTok{sum}\NormalTok{(hhcount}\OperatorTok{$}\NormalTok{cap)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 701
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(poorcount}\OperatorTok{$}\NormalTok{cap)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 308
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(poorcount}\OperatorTok{$}\NormalTok{cap)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(hhcount}\OperatorTok{$}\NormalTok{cap)}\OperatorTok{*}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 43.93723
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(poorcount}\OperatorTok{$}\NormalTok{wcap)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(hhcount}\OperatorTok{$}\NormalTok{wcap)}\OperatorTok{*}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 44.76056
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\KeywordTok{nrow}\NormalTok{(poorcount))}\OperatorTok{/}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(hhcount))}\OperatorTok{*}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 40.17094
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S3C_connectivity <-}\StringTok{ }\KeywordTok{read_dta}\NormalTok{(}\StringTok{"Kenya_FD_materials/BaselineSurvey/S3C_connectivity.dta"}\NormalTok{)}
+
+\NormalTok{hhdist <-}\StringTok{  }\NormalTok{S3C_connectivity }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(hhid, }\DataTypeTok{dist_fmarket =}\NormalTok{ S3Cq1b)}
+
+\NormalTok{hhchars <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars, hhdist, }\StringTok{"hhid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{offinc <-}\StringTok{ }\NormalTok{aginc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(SalesForBusiness }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(hhid) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{agsales =}\NormalTok{ total)}
+
+\NormalTok{offinc <-}\StringTok{ }\NormalTok{offinc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(hhid, agsales) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(hhid) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{totalag =} \KeywordTok{sum}\NormalTok{(agsales))}
+
+\NormalTok{offinc <-}\StringTok{ }\NormalTok{offinc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(hhid, totalag) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{distinct}\NormalTok{()}
+
+\NormalTok{offinc <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhwcap,offinc,  }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{offinc <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars,offinc,  }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{offinc <-}\StringTok{ }\NormalTok{offinc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{agshare =}\NormalTok{ ((totalag}\OperatorTok{/}\NormalTok{wcap)}\OperatorTok{/}\NormalTok{(mmoInc}\OperatorTok{*}\NormalTok{obs)))}
+\NormalTok{offinc <-}\StringTok{ }\NormalTok{offinc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{  }\KeywordTok{select}\NormalTok{(hhid, }\DataTypeTok{offinc =}\NormalTok{ agshare)}
+
+
+\CommentTok{###2 THIS IS LIKELY "FARM"}
+\NormalTok{oninc <-}\StringTok{ }\NormalTok{aginc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(SalesForBusiness }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(hhid) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{agsales =}\NormalTok{ total)}
+
+\NormalTok{oninc <-}\StringTok{ }\NormalTok{oninc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(hhid, agsales) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(hhid) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{totalag =} \KeywordTok{sum}\NormalTok{(agsales))}
+
+\NormalTok{oninc <-}\StringTok{ }\NormalTok{oninc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(hhid, totalag) }\OperatorTok{%>%}\StringTok{ }\NormalTok{distinct}
+
+\NormalTok{oninc <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhwcap,oninc,  }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{oninc <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars,oninc,  }\DataTypeTok{by =} \StringTok{"hhid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `hhid` has different attributes on LHS and RHS of join
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{oninc <-}\StringTok{ }\NormalTok{oninc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{agshare =}\NormalTok{ ((totalag}\OperatorTok{/}\NormalTok{wcap)}\OperatorTok{/}\NormalTok{(mmoInc}\OperatorTok{*}\NormalTok{obs)))}
+\NormalTok{oninc <-}\StringTok{ }\NormalTok{oninc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{  }\KeywordTok{select}\NormalTok{(hhid, }\DataTypeTok{oninc =}\NormalTok{ agshare)}
+
+
+\NormalTok{hhchars <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars, offinc, }\StringTok{"hhid"}\NormalTok{)}
+\NormalTok{hhchars <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hhchars, oninc, }\StringTok{"hhid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#Tables
+
+\begin{table}
+
+\caption{\label{tab:newtable}Group Variables}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{lrrrrrrrrrr}
+\toprule
+ & Mean CV & Max CV & Min CV & SD CV & Mean Income & Max Income & Min Income & SD Income & Mean Poverty Freq & Obs\\
+\midrule
+\rowcolor{gray!6}  Overall & 0.77 & 1.69 & 0.35 & 0.27 & 3952.36 & 87134.49 & 382.44 & 12186.19 & 42.65 & 117\\
+\addlinespace[0.3em]
+\multicolumn{11}{l}{\textbf{Participation}}\\
+\hspace{1em}non-CSA & 0.82 & 1.54 & 0.35 & 0.29 & 2766.62 & 51168.61 & 382.44 & 10098.04 & 51.72 & 43\\
+\rowcolor{gray!6}  \hspace{1em}CSA & 0.74 & 1.69 & 0.37 & 0.25 & 5045.63 & 87134.49 & 691.44 & 13273.23 & 37.38 & 74\\
+\hspace{1em}non-CSV & 0.77 & 1.54 & 0.35 & 0.27 & 5000.77 & 51168.61 & 644.92 & 10716.48 & 39.82 & 33\\
+\rowcolor{gray!6}  \hspace{1em}CSV & 0.77 & 1.69 & 0.43 & 0.27 & 3602.91 & 87134.49 & 382.44 & 12770.11 & 43.77 & 84\\
+\addlinespace[0.3em]
+\multicolumn{11}{l}{\textbf{Participation Overlap}}\\
+\hspace{1em}non-CSV, non-CSA & 0.83 & 1.54 & 0.35 & 0.29 & 3011.88 & 51168.61 & 644.92 & 15150.35 & 45.64 & 15\\
+\rowcolor{gray!6}  \hspace{1em}CSV, non-CSA & 0.81 & 1.52 & 0.43 & 0.30 & 2656.12 & 24439.98 & 382.44 & 4861.54 & 54.98 & 28\\
+\hspace{1em}non-CSV, CSA & 0.72 & 1.32 & 0.37 & 0.26 & 5722.96 & 17840.58 & 953.88 & 3993.02 & 34.97 & 18\\
+\rowcolor{gray!6}  \hspace{1em}CSV, CSA & 0.75 & 1.69 & 0.43 & 0.25 & 4647.65 & 87134.49 & 691.44 & 15057.79 & 38.16 & 56\\
+\addlinespace[0.3em]
+\multicolumn{11}{l}{\textbf{Household Head Gender}}\\
+\hspace{1em}Male & 0.78 & 1.54 & 0.37 & 0.27 & 3873.89 & 87134.49 & 463.35 & 11384.69 & 42.63 & 93\\
+\rowcolor{gray!6}  \hspace{1em}Female & 0.75 & 1.69 & 0.35 & 0.28 & 4662.12 & 68704.90 & 382.44 & 15337.70 & 41.25 & 23\\
+\addlinespace[0.3em]
+\multicolumn{11}{l}{\textbf{Income}}\\
+\hspace{1em}Low-income & 0.72 & 1.41 & 0.37 & 0.25 & 1814.61 & 2936.62 & 382.44 & 716.72 & 76.07 & 47\\
+\rowcolor{gray!6}  \hspace{1em}Higher-income & 0.80 & 1.69 & 0.35 & 0.28 & 6622.01 & 87134.49 & 2991.15 & 14501.48 & 20.22 & 70\\
+\addlinespace[0.3em]
+\multicolumn{11}{l}{\textbf{Plot size}}\\
+\hspace{1em}Smaller land & 0.77 & 1.69 & 0.35 & 0.27 & 4279.06 & 87134.49 & 382.44 & 13550.60 & 41.68 & 92\\
+\rowcolor{gray!6}  \hspace{1em}Larger land & 0.77 & 1.38 & 0.37 & 0.26 & 3653.12 & 11852.64 & 712.03 & 3300.64 & 46.26 & 25\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:printtables}ANOVA of CV}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Sum Sq & Df & F value & Pr(>F)\\
+\midrule
+femalehh & 0.022 & 1 & 0.298 & 0.587\\
+ 
+CSA & 0.263 & 1 & 3.618 & 0.060\\
+ 
+CSV & 0.006 & 1 & 0.077 & 0.781\\
+ 
+bigland & 0.000 & 1 & 0.001 & 0.979\\
+ 
+upperquint & 0.223 & 1 & 3.072 & 0.082\\
+ 
+CSA:CSV & 0.013 & 1 & 0.184 & 0.669\\
+ 
+Residuals & 7.928 & 109 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:printtables}ANOVA of Mean income}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Sum Sq & Df & F value & Pr(>F)\\
+\midrule
+femalehh & 47568004 & 1 & 0.322 & 0.572\\
+ 
+CSA & 84011527 & 1 & 0.569 & 0.452\\
+ 
+CSV & 30882162 & 1 & 0.209 & 0.648\\
+ 
+bigland & 174309398 & 1 & 1.180 & 0.280\\
+ 
+CSA:CSV & 522358420 & 1 & 3.537 & 0.063\\
+ 
+Residuals & 16245262483 & 110 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:printtables}ANOVA of Poverty Persistence}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Sum Sq & Df & F value & Pr(>F)\\
+\midrule
+femalehh & 0.011 & 1 & 0.263 & 0.609\\
+ 
+CSA & 0.004 & 1 & 0.091 & 0.764\\
+ 
+CSV & 0.000 & 1 & 0.011 & 0.917\\
+ 
+bigland & 0.005 & 1 & 0.106 & 0.746\\
+ 
+upperquint & 22.056 & 1 & 512.247 & 0.000\\
+ 
+CSA:CSV & 0.031 & 1 & 0.714 & 0.400\\
+ 
+Residuals & 4.693 & 109 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:printtables}ANOVA of Poverty Persistence, Income Groups Omitted}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Sum Sq & Df & F value & Pr(>F)\\
+\midrule
+femalehh & 0.016 & 1 & 0.068 & 0.795\\
+ 
+CSA & 0.748 & 1 & 3.075 & 0.082\\
+ 
+CSV & 0.702 & 1 & 2.887 & 0.092\\
+ 
+bigland & 0.106 & 1 & 0.437 & 0.510\\
+ 
+CSA:CSV & 0.088 & 1 & 0.364 & 0.548\\
+ 
+Residuals & 26.749 & 110 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:printtables}ANOVA of CSA Use}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Sum Sq & Df & F value & Pr(>F)\\
+\midrule
+femalehh & 15.721 & 1 & 2.208 & 0.140\\
+ 
+CSV & 0.772 & 1 & 0.108 & 0.743\\
+ 
+bigland & 0.075 & 1 & 0.010 & 0.919\\
+ 
+upperquint & 52.554 & 1 & 7.380 & 0.008\\
+ 
+Residuals & 790.440 & 111 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:tableuse}ANOVA of CV}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Sum Sq & Df & F value & Pr(>F)\\
+\midrule
+femalehh & 0.013 & 1 & 0.182 & 0.671\\
+ 
+CSV & 0.001 & 1 & 0.014 & 0.905\\
+ 
+usecount & 0.122 & 1 & 1.673 & 0.199\\
+ 
+bigland & 0.001 & 1 & 0.017 & 0.896\\
+ 
+upperquint & 0.245 & 1 & 3.348 & 0.070\\
+ 
+CSV:usecount & 0.103 & 1 & 1.410 & 0.238\\
+ 
+Residuals & 7.979 & 109 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:tableuse}ANOVA of Mean income}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Sum Sq & Df & F value & Pr(>F)\\
+\midrule
+femalehh & 45204931 & 1 & 0.305 & 0.582\\
+ 
+CSV & 22551383 & 1 & 0.152 & 0.697\\
+ 
+usecount & 133610978 & 1 & 0.901 & 0.344\\
+ 
+bigland & 252857356 & 1 & 1.706 & 0.194\\
+ 
+CSV:usecount & 412473692 & 1 & 2.783 & 0.098\\
+ 
+Residuals & 16305547760 & 110 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:tableuse}ANOVA of Poverty Persistence}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Sum Sq & Df & F value & Pr(>F)\\
+\midrule
+femalehh & 0.005 & 1 & 0.137 & 0.712\\
+ 
+CSV & 0.000 & 1 & 0.008 & 0.927\\
+ 
+usecount & 0.010 & 1 & 0.255 & 0.615\\
+ 
+bigland & 0.013 & 1 & 0.322 & 0.572\\
+ 
+upperquint & 20.580 & 1 & 519.615 & 0.000\\
+ 
+CSV:usecount & 0.401 & 1 & 10.119 & 0.002\\
+ 
+Residuals & 4.317 & 109 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}
+
+\caption{\label{tab:largeteable of p}P-Values of ANOVA Tests}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{lrrrrrrrr}
+\toprule
+  & CV (2) & CV (7) & Income (3) & Income (8) & Poverty (4) & Poverty (5) & Poverty (9) & CSA Use (6)\\
+\midrule
+\rowcolor{gray!6}  bigland & 0.979 & 0.896 & 0.280 & 0.194 & 0.746 & 0.510 & 0.572 & 0.919\\
+CSA & 0.060 & - & 0.452 & - & 0.764 & 0.082 & - & -\\
+\rowcolor{gray!6}  CSA:CSV & 0.669 & - & 0.063 & - & 0.400 & 0.548 & - & -\\
+CSV & 0.781 & 0.905 & 0.648 & 0.697 & 0.917 & 0.092 & 0.927 & 0.743\\
+\rowcolor{gray!6}  CSV:usecount & - & 0.238 & - & 0.098 & - & - & 0.002 & -\\
+femalehh & 0.587 & 0.671 & 0.572 & 0.582 & 0.609 & 0.795 & 0.712 & 0.140\\
+\rowcolor{gray!6}  upperquint & 0.082 & 0.070 & - & - & 0.000 & - & 0.000 & 0.008\\
+usecount & - & 0.199 & - & 0.344 & - & - & 0.615 & -\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+F tests, but assume normal distribution, unlikely
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem1 <-}
+\StringTok{  }\KeywordTok{lm_robust}\NormalTok{(CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh  }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc), hhchars,}
+            \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{)}
+
+\KeywordTok{summary}\NormalTok{(cv.rem1, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} CSV + femalehh +
+totalplot + log(mmoInc), data = hhchars, se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.5437450 0.216566 2.51076 0.01349 0.11461 0.97288 111 CSV -0.0045258
+0.059690 -0.07582 0.93970 -0.12280 0.11375 111 femalehh -0.0294316
+0.066994 -0.43932 0.66129 -0.16218 0.10332 111 totalplot -0.0007004
+0.005425 -0.12910 0.89751 -0.01145 0.01005 111 log(mmoInc) 0.0284906
+0.025309 1.12573 0.26271 -0.02166 0.07864 111
+
+Multiple R-squared: 0.01351 , Adjusted R-squared: -0.02204 F-statistic:
+0.4093 on 4 and 111 DF, p-value: 0.8016
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem2 <-}
+\StringTok{  }\KeywordTok{lm_robust}\NormalTok{(CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh  }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc), hhchars,}
+            \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{)}
+
+\KeywordTok{summary}\NormalTok{(cv.rem2, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} CSA + femalehh +
+totalplot + log(mmoInc), data = hhchars, se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.5317890 0.20641 2.57642 0.01130 0.12278 0.94080 111 CSA -0.1007697
+0.05811 -1.73423 0.08565 -0.21591 0.01437 111 femalehh -0.0433691
+0.06602 -0.65695 0.51258 -0.17418 0.08745 111 totalplot -0.0002793
+0.00494 -0.05654 0.95501 -0.01007 0.00951 111 log(mmoInc) 0.0374239
+0.02610 1.43369 0.15447 -0.01430 0.08915 111
+
+Multiple R-squared: 0.04431 , Adjusted R-squared: 0.009876 F-statistic:
+0.9793 on 4 and 111 DF, p-value: 0.4219
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem3 <-}\StringTok{ }\KeywordTok{lm_robust}\NormalTok{(CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh  }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot, hhchars,}
+                     \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{)}
+
+\KeywordTok{summary}\NormalTok{(cv.rem3, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} usecount + femalehh +
+totalplot, data = hhchars, se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.7961261 0.040632 19.59368 5.551e-38 0.71562 0.87663 112 usecount
+-0.0082676 0.009357 -0.88360 3.788e-01 -0.02681 0.01027 112 femalehh
+-0.0355814 0.064387 -0.55262 5.816e-01 -0.16316 0.09199 112 totalplot
+-0.0004308 0.005269 -0.08176 9.350e-01 -0.01087 0.01001 112
+
+Multiple R-squared: 0.008446 , Adjusted R-squared: -0.01811 F-statistic:
+0.3302 on 3 and 112 DF, p-value: 0.8035
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem4 <-}
+\StringTok{  }\KeywordTok{lm_robust}\NormalTok{(CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh  }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc),}
+\NormalTok{            hhchars,}
+            \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{)}
+
+\KeywordTok{summary}\NormalTok{(cv.rem4, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} usecount + femalehh +
+totalplot + log(mmoInc), data = hhchars, se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.5065881 0.214625 2.3603 0.0200 0.08129 0.931882 111 usecount
+-0.0114806 0.010078 -1.1391 0.2571 -0.03145 0.008490 111 femalehh
+-0.0412344 0.063454 -0.6498 0.5171 -0.16697 0.084504 111 totalplot
+-0.0009515 0.005462 -0.1742 0.8620 -0.01177 0.009871 111 log(mmoInc)
+0.0357767 0.026715 1.3392 0.1832 -0.01716 0.088714 111
+
+Multiple R-squared: 0.02598 , Adjusted R-squared: -0.009125 F-statistic:
+0.6789 on 4 and 111 DF, p-value: 0.608
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem5 <-}
+\StringTok{  }\KeywordTok{lm_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh  }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{:}
+\StringTok{      }\NormalTok{usecount,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}
+\NormalTok{  )}
+
+\KeywordTok{summary}\NormalTok{(cv.rem5, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} usecount + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc:usecount, data =
+hhchars, se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.392121 0.230154 1.7037 0.091806 -0.06498 0.849226 92 usecount
+-0.023411 0.008932 -2.6211 0.010254 -0.04115 -0.005672 92 femalehh
+-0.044339 0.074174 -0.5978 0.551460 -0.19166 0.102977 92 totalplot
+-0.001516 0.005712 -0.2654 0.791305 -0.01286 0.009828 92 log(mmoInc)
+0.051374 0.029044 1.7688 0.080234 -0.00631 0.109057 92 dist\_fmarket
+-0.003948 0.008158 -0.4839 0.629594 -0.02015 0.012255 92 usecount:oninc
+0.123744 0.032866 3.7652 0.000293 0.05847 0.189018 92
+
+Multiple R-squared: 0.09667 , Adjusted R-squared: 0.03776 F-statistic:
+3.207 on 6 and 92 DF, p-value: 0.006632
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem6 <-}
+\StringTok{  }\KeywordTok{lm_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh  }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{:}
+\StringTok{      }\NormalTok{CSA,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}
+\NormalTok{  )}
+
+\KeywordTok{summary}\NormalTok{(cv.rem6, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} CSA + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc:CSA, data = hhchars,
+se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.4789921 0.226357 2.11609 0.037038 0.029427 0.928557 92 CSA -0.1702408
+0.063952 -2.66199 0.009168 -0.297256 -0.043226 92 femalehh -0.0597470
+0.075482 -0.79154 0.430664 -0.209660 0.090166 92 totalplot -0.0003765
+0.005320 -0.07077 0.943737 -0.010942 0.010189 92 log(mmoInc) 0.0478072
+0.028994 1.64885 0.102589 -0.009778 0.105392 92 dist\_fmarket -0.0063975
+0.008242 -0.77618 0.439634 -0.022767 0.009972 92 CSA:oninc 0.5188196
+0.308218 1.68329 0.095710 -0.093329 1.130968 92
+
+Multiple R-squared: 0.1064 , Adjusted R-squared: 0.04809 F-statistic:
+1.805 on 6 and 92 DF, p-value: 0.1067
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem7 <-}
+\StringTok{  }\KeywordTok{lm_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh  }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}
+\StringTok{      }\NormalTok{usecount,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}
+\NormalTok{  )}
+
+\KeywordTok{summary}\NormalTok{(cv.rem7, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} usecount + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc * usecount, data =
+hhchars, se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.380789 0.244212 1.5593 0.12241 -0.104308 0.865886 91 usecount
+-0.022398 0.009483 -2.3620 0.02031 -0.041234 -0.003561 91 femalehh
+-0.046296 0.072956 -0.6346 0.52730 -0.191215 0.098623 91 totalplot
+-0.001718 0.005606 -0.3065 0.75989 -0.012854 0.009417 91 log(mmoInc)
+0.051997 0.029913 1.7383 0.08554 -0.007421 0.111415 91 dist\_fmarket
+-0.004022 0.008237 -0.4883 0.62650 -0.020385 0.012340 91 oninc 0.067040
+0.263108 0.2548 0.79945 -0.455592 0.589672 91 usecount:oninc 0.114303
+0.046084 2.4803 0.01497 0.022762 0.205844 91
+
+Multiple R-squared: 0.09726 , Adjusted R-squared: 0.02781 F-statistic:
+2.542 on 7 and 91 DF, p-value: 0.0195
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem8 <-}
+\StringTok{  }\KeywordTok{lm_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh  }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}
+\StringTok{      }\NormalTok{CSA,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}
+\NormalTok{  )}
+
+\KeywordTok{summary}\NormalTok{(cv.rem8, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} CSA + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc * CSA, data = hhchars,
+se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.4619663 0.267092 1.72961 0.08709 -0.06858 0.992512 91 CSA -0.1642217
+0.075113 -2.18633 0.03136 -0.31342 -0.015019 91 femalehh -0.0605521
+0.076048 -0.79624 0.42797 -0.21161 0.090507 91 totalplot -0.0004624
+0.005242 -0.08821 0.92990 -0.01087 0.009950 91 log(mmoInc) 0.0492021
+0.031619 1.55609 0.12316 -0.01361 0.112009 91 dist\_fmarket -0.0064929
+0.008303 -0.78202 0.43623 -0.02299 0.009999 91 oninc 0.0617173 0.376913
+0.16374 0.87030 -0.68697 0.810408 91 CSA:oninc 0.4552605 0.508199
+0.89583 0.37271 -0.55421 1.464735 91
+
+Multiple R-squared: 0.1066 , Adjusted R-squared: 0.0379 F-statistic:
+1.531 on 7 and 91 DF, p-value: 0.1668
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.rem9 <-}
+\StringTok{  }\KeywordTok{lm_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{+}\StringTok{ }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}
+\NormalTok{  )}
+
+\KeywordTok{summary}\NormalTok{(cv.rem9, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = CV \textasciitilde{} CSA + CSV + log(mmoInc)
++ dist\_fmarket + oninc, data = hhchars, se\_type = ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.288897 0.227695 1.2688 0.20765 -0.163197 0.74099 94 CSA -0.114324
+0.062544 -1.8279 0.07074 -0.238507 0.00986 94 CSV 0.047270 0.062120
+0.7610 0.44859 -0.076070 0.17061 94 log(mmoInc) 0.059713 0.029052 2.0554
+0.04262 0.002029 0.11740 94 dist\_fmarket -0.004251 0.007883 -0.5392
+0.59103 -0.019903 0.01140 94 oninc 0.349388 0.257688 1.3559 0.17839
+-0.162258 0.86103 94
+
+Multiple R-squared: 0.09521 , Adjusted R-squared: 0.04708 F-statistic:
+1.695 on 5 and 94 DF, p-value: 0.1435
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.remiv1 <-}\StringTok{ }\KeywordTok{iv_robust}\NormalTok{(CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{|}\StringTok{ }\NormalTok{CSV,}
+\NormalTok{                       hhchars,}
+                       \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+                       \DataTypeTok{diagnostics =}\NormalTok{ T)}
+
+\CommentTok{# print(summary(cv.remiv1, diagnostics = T))}
+
+
+
+\NormalTok{cv.remiv2 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\CommentTok{# print(summary(cv.remiv2, diagnostics = T))}
+
+
+
+
+\NormalTok{cv.remiv3 <-}\StringTok{ }\KeywordTok{iv_robust}\NormalTok{(CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{|}\StringTok{ }\NormalTok{CSV,}
+\NormalTok{                       hhchars,}
+                       \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+                       \DataTypeTok{diagnostics =}\NormalTok{ T)}
+
+\CommentTok{# print(summary(cv.remiv3, diagnostics = T))}
+
+
+
+\NormalTok{cv.remiv4 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\CommentTok{# print(summary(cv.remiv4, diagnostics = T))}
+
+
+
+\NormalTok{cv.remiv5 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc),}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\CommentTok{# print(summary(cv.remiv5, diagnostics = T))}
+
+
+
+\NormalTok{cv.remiv6 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\CommentTok{# print(summary(cv.remiv6, diagnostics = T))}
+
+
+\NormalTok{cv.remiv7 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv7, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+Call: iv\_robust(formula = CV \textasciitilde{} usecount + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc \textbar{} CSV +
+femalehh + totalplot + log(mmoInc) + dist\_fmarket + oninc, data =
+hhchars, se\_type = ``stata'', diagnostics = T)
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+1.91366 40.3833 0.04739 0.9623 -78.2910 82.118 92 usecount 0.71544
+18.5004 0.03867 0.9692 -36.0280 37.459 92 femalehh 0.83270 22.6338
+0.03679 0.9707 -44.1199 45.785 92 totalplot 0.01704 0.4972 0.03427
+0.9727 -0.9704 1.004 92 log(mmoInc) -0.37357 10.9280 -0.03418 0.9728
+-22.0775 21.330 92 dist\_fmarket 0.02206 0.6921 0.03188 0.9746 -1.3525
+1.397 92 oninc 1.00994 16.8643 0.05989 0.9524 -32.4840 34.504 92
+
+Multiple R-squared: -54.62 , Adjusted R-squared: -58.25 F-statistic:
+0.0203 on 6 and 92 DF, p-value: 1
+
+Diagnostics: numdf dendf value p.value Weak instruments 1 92 0.002 0.969
+Wu-Hausman 1 91 0.126 0.723 Overidentifying 0 NA NA NA
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.remiv8 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{:}\NormalTok{CSA }\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{:}\NormalTok{CSV,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv8, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+Call: iv\_robust(formula = CV \textasciitilde{} CSA + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc:CSA \textbar{} CSV +
+femalehh + totalplot + log(mmoInc) + dist\_fmarket + oninc:CSV, data =
+hhchars, se\_type = ``stata'', diagnostics = T)
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.399097 0.25722 1.55158 0.1242 -0.11176 0.90996 92 CSA 0.191437 0.80290
+0.23843 0.8121 -1.40319 1.78607 92 femalehh 0.005868 0.17553 0.03343
+0.9734 -0.34274 0.35448 92 totalplot -0.003184 0.01169 -0.27235 0.7860
+-0.02640 0.02004 92 log(mmoInc) 0.027748 0.07221 0.38428 0.7017 -0.11566
+0.17116 92 dist\_fmarket 0.001395 0.02237 0.06238 0.9504 -0.04304
+0.04583 92 CSA:oninc 0.246395 0.55148 0.44678 0.6561 -0.84890 1.34169 92
+
+Multiple R-squared: -0.2212 , Adjusted R-squared: -0.3009 F-statistic:
+0.4762 on 6 and 92 DF, p-value: 0.8244
+
+Diagnostics: numdf dendf value p.value\\
+Weak instruments (CSA) 2 92 0.394 0.67521\\
+Weak instruments (CSA:oninc) 2 92 5.538 0.00536 ** Wu-Hausman 2 90 0.587
+0.55800\\
+Overidentifying 0 NA NA NA\\
+--- Signif. codes: 0 `\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 '
+' 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.remiv9 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{:}\NormalTok{usecount}\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{:}\NormalTok{CSV,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv9, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+Call: iv\_robust(formula = CV \textasciitilde{} usecount + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc:usecount \textbar{} CSV
++ femalehh + totalplot + log(mmoInc) + dist\_fmarket + oninc:CSV, data =
+hhchars, se\_type = ``stata'', diagnostics = T)
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.256606 0.516764 0.4966 0.6207 -0.76973 1.28294 92 usecount -0.048702
+0.134392 -0.3624 0.7179 -0.31562 0.21821 92 femalehh -0.095953 0.190349
+-0.5041 0.6154 -0.47400 0.28210 92 totalplot -0.001451 0.007168 -0.2024
+0.8401 -0.01569 0.01279 92 log(mmoInc) 0.081257 0.110809 0.7333 0.4652
+-0.13882 0.30133 92 dist\_fmarket -0.006264 0.011752 -0.5330 0.5953
+-0.02961 0.01708 92 usecount:oninc -0.073578 0.425468 -0.1729 0.8631
+-0.91859 0.77144 92
+
+Multiple R-squared: -0.2263 , Adjusted R-squared: -0.3063 F-statistic:
+0.6594 on 6 and 92 DF, p-value: 0.6825
+
+Diagnostics: numdf dendf value p.value\\
+Weak instruments (usecount) 2 92 2.795 0.0663 . Weak instruments
+(usecount:oninc) 2 92 4.765 0.0107 * Wu-Hausman 2 90 0.316 0.7301\\
+Overidentifying 0 NA NA NA\\
+--- Signif. codes: 0 `\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 '
+' 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.remiv10 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}\NormalTok{CSA }\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}\NormalTok{CSA ,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv10, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+Call: iv\_robust(formula = CV \textasciitilde{} CSA + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc * CSA \textbar{} CSV +
+femalehh + totalplot + log(mmoInc) + dist\_fmarket + oninc * CSA, data =
+hhchars, se\_type = ``stata'', diagnostics = T)
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.4619663 0.267092 1.72961 0.08709 -0.06858 0.992512 91 CSA -0.1642217
+0.075113 -2.18633 0.03136 -0.31342 -0.015019 91 femalehh -0.0605521
+0.076048 -0.79624 0.42797 -0.21161 0.090507 91 totalplot -0.0004624
+0.005242 -0.08821 0.92990 -0.01087 0.009950 91 log(mmoInc) 0.0492021
+0.031619 1.55609 0.12316 -0.01361 0.112009 91 dist\_fmarket -0.0064929
+0.008303 -0.78202 0.43623 -0.02299 0.009999 91 oninc 0.0617173 0.376913
+0.16374 0.87030 -0.68697 0.810408 91 CSA:oninc 0.4552605 0.508199
+0.89583 0.37271 -0.55421 1.464735 91
+
+Multiple R-squared: 0.1066 , Adjusted R-squared: 0.0379 F-statistic:
+1.531 on 7 and 91 DF, p-value: 0.1668
+
+Diagnostics: numdf dendf value p.value\\
+Weak instruments 2 90 8.462e+30 \textless2e-16 *** Wu-Hausman 0 91 NA
+NA\\
+Overidentifying 1 NA 4.290e-01 0.513\\
+--- Signif. codes: 0 `\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 '
+' 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.remiv11 <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}\NormalTok{usecount}\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}\NormalTok{usecount,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv11, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+Call: iv\_robust(formula = CV \textasciitilde{} usecount + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc * usecount \textbar{}
+CSV + femalehh + totalplot + log(mmoInc) + dist\_fmarket + oninc *
+usecount, data = hhchars, se\_type = ``stata'', diagnostics = T)
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.380789 0.244212 1.5593 0.12241 -0.104308 0.865886 91 usecount
+-0.022398 0.009483 -2.3620 0.02031 -0.041234 -0.003561 91 femalehh
+-0.046296 0.072956 -0.6346 0.52730 -0.191215 0.098623 91 totalplot
+-0.001718 0.005606 -0.3065 0.75989 -0.012854 0.009417 91 log(mmoInc)
+0.051997 0.029913 1.7383 0.08554 -0.007421 0.111415 91 dist\_fmarket
+-0.004022 0.008237 -0.4883 0.62650 -0.020385 0.012340 91 oninc 0.067040
+0.263108 0.2548 0.79945 -0.455592 0.589672 91 usecount:oninc 0.114303
+0.046084 2.4803 0.01497 0.022762 0.205844 91
+
+Multiple R-squared: 0.09726 , Adjusted R-squared: 0.02781 F-statistic:
+2.542 on 7 and 91 DF, p-value: 0.0195
+
+Diagnostics: numdf dendf value p.value\\
+Weak instruments 2 90 1.333e+31 \textless2e-16 *** Wu-Hausman 0 91 NA
+NA\\
+Overidentifying 1 NA 4.720e-01 0.492\\
+--- Signif. codes: 0 `\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 '
+' 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.remiv10a <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{CSA }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}\NormalTok{CSA }\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}\NormalTok{CSV ,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv10a, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+Call: iv\_robust(formula = CV \textasciitilde{} CSA + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc * CSA \textbar{} CSV +
+femalehh + totalplot + log(mmoInc) + dist\_fmarket + oninc * CSV, data =
+hhchars, se\_type = ``stata'', diagnostics = T)
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.620323 0.68148 0.9103 0.3651 -0.73336 1.97401 91 CSA 0.279641 0.85490
+0.3271 0.7443 -1.41851 1.97779 91 femalehh 0.039338 0.16806 0.2341
+0.8155 -0.29449 0.37317 91 totalplot -0.005993 0.01106 -0.5421 0.5891
+-0.02795 0.01597 91 log(mmoInc) -0.010056 0.07494 -0.1342 0.8935
+-0.15891 0.13880 91 dist\_fmarket 0.007819 0.02199 0.3555 0.7230
+-0.03587 0.05151 91 oninc -0.642020 1.72239 -0.3727 0.7102 -4.06333
+2.77929 91 CSA:oninc 1.500675 2.86287 0.5242 0.6014 -4.18606 7.18741 91
+
+Multiple R-squared: -0.7837 , Adjusted R-squared: -0.921 F-statistic:
+0.5316 on 7 and 91 DF, p-value: 0.8085
+
+Diagnostics: numdf dendf value p.value Weak instruments (CSA) 2 91 0.566
+0.570 Weak instruments (CSA:oninc) 2 91 1.377 0.258 Wu-Hausman 2 89
+1.224 0.299 Overidentifying 0 NA NA NA
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.remiv11a <-}
+\StringTok{  }\KeywordTok{iv_robust}\NormalTok{(}
+\NormalTok{    CV }\OperatorTok{~}\StringTok{ }\NormalTok{usecount }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}\NormalTok{usecount}\OperatorTok{|}
+\StringTok{      }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc}\OperatorTok{*}\NormalTok{CSV,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}\NormalTok{,}
+    \DataTypeTok{diagnostics =}\NormalTok{ T}
+\NormalTok{  )}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv11a, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+Call: iv\_robust(formula = CV \textasciitilde{} usecount + femalehh +
+totalplot + log(mmoInc) + dist\_fmarket + oninc * usecount \textbar{}
+CSV + femalehh + totalplot + log(mmoInc) + dist\_fmarket + oninc * CSV,
+data = hhchars, se\_type = ``stata'', diagnostics = T)
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+0.5477943 0.403802 1.35659 0.1783 -0.25431 1.34990 91 usecount 0.1288747
+0.313650 0.41089 0.6821 -0.49415 0.75190 91 femalehh 0.0978465 0.295528
+0.33109 0.7413 -0.48918 0.68488 91 totalplot 0.0011452 0.009175 0.12482
+0.9009 -0.01708 0.01937 91 log(mmoInc) -0.0163883 0.132374 -0.12380
+0.9017 -0.27933 0.24656 91 dist\_fmarket -0.0004158 0.018063 -0.02302
+0.9817 -0.03630 0.03546 91 oninc 0.7125043 1.790688 0.39789 0.6916
+-2.84448 4.26949 91 usecount:oninc -0.1142721 0.672626 -0.16989 0.8655
+-1.45036 1.22182 91
+
+Multiple R-squared: -1.728 , Adjusted R-squared: -1.938 F-statistic:
+0.5348 on 7 and 91 DF, p-value: 0.8061
+
+Diagnostics: numdf dendf value p.value Weak instruments (usecount) 2 91
+0.763 0.469 Weak instruments (usecount:oninc) 2 91 0.902 0.409
+Wu-Hausman 2 89 0.887 0.415 Overidentifying 0 NA NA NA
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bptest}\NormalTok{(cv.rem1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+studentized Breusch-Pagan test
+\end{verbatim}
+
+data: cv.rem1 BP = 0.6896, df = 4, p-value = 0.9526
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bptest}\NormalTok{(cv.rem2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+studentized Breusch-Pagan test
+\end{verbatim}
+
+data: cv.rem2 BP = 1.7711, df = 4, p-value = 0.7778
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bptest}\NormalTok{(cv.rem3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+studentized Breusch-Pagan test
+\end{verbatim}
+
+data: cv.rem3 BP = 0.47246, df = 3, p-value = 0.9249
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bptest}\NormalTok{(cv.rem4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+studentized Breusch-Pagan test
+\end{verbatim}
+
+data: cv.rem4 BP = 1.3545, df = 4, p-value = 0.8521
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bptest}\NormalTok{(cv.rem5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+studentized Breusch-Pagan test
+\end{verbatim}
+
+data: cv.rem5 BP = 5.6574, df = 6, p-value = 0.4626
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bptest}\NormalTok{(cv.rem6)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+studentized Breusch-Pagan test
+\end{verbatim}
+
+data: cv.rem6 BP = 8.0488, df = 6, p-value = 0.2346
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bptest}\NormalTok{(cv.rem7)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+studentized Breusch-Pagan test
+\end{verbatim}
+
+data: cv.rem7 BP = 6.3123, df = 7, p-value = 0.5038
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bptest}\NormalTok{(cv.rem8)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+studentized Breusch-Pagan test
+\end{verbatim}
+
+data: cv.rem8 BP = 7.9756, df = 7, p-value = 0.3348
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{texreg}\OperatorTok{::}\KeywordTok{texreg}\NormalTok{(}
+  \DataTypeTok{l =} \KeywordTok{list}\NormalTok{(}
+\NormalTok{    cv.rem1,}
+\NormalTok{    cv.rem2,}
+\NormalTok{    cv.rem3,}
+\NormalTok{    cv.rem4,}
+\NormalTok{    cv.rem5,}
+\NormalTok{    cv.rem6,}
+\NormalTok{    cv.rem7,}
+\NormalTok{    cv.rem8}
+\NormalTok{  ),}
+  \DataTypeTok{stars =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\FloatTok{0.05}\NormalTok{, }\FloatTok{0.1}\NormalTok{),}
+  \DataTypeTok{include.ci =}\NormalTok{ F,}
+  \DataTypeTok{caption.above =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{caption =} \StringTok{"OLS Models"}\NormalTok{,}
+  \CommentTok{# booktabs = TRUE,}
+  \CommentTok{# custom.header = list(}
+  \CommentTok{#   "OLS" = 1:4,}
+  \CommentTok{#   "IV, use count and CSA instrumented by CSV" = 5:9}
+  \CommentTok{# ),}
+  \DataTypeTok{bold =} \FloatTok{0.05}\NormalTok{,}
+  \DataTypeTok{custom.coef.names =} \KeywordTok{c}\NormalTok{(}
+    \StringTok{"Intercept"}\NormalTok{,}
+    \StringTok{"CSV"}\NormalTok{,}
+    \StringTok{"Female Head"}\NormalTok{,}
+    \StringTok{"Total Plot Size"}\NormalTok{,}
+    \StringTok{"Log Mean Income"}\NormalTok{,}
+    \StringTok{"CSA"}\NormalTok{,}
+    \StringTok{"CSA Use Count"}\NormalTok{,}
+    \StringTok{"Distance to Market"}\NormalTok{,}
+    \StringTok{"Use CountxOn-Farm %"}\NormalTok{,}
+    \StringTok{"CSAxOn-Farm %"}\NormalTok{,}
+    \StringTok{"On-Farm Income Share"}
+\NormalTok{  ),}
+  \CommentTok{#  custom.note = "%stars. Models 5 and 6 instrument CSA with CSV, Models 7, 8, and 9 instrument use count with CSV."}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+\caption{OLS Models}
+\begin{center}
+\begin{tabular}{l c c c c c c c c}
+\hline
+ & Model 1 & Model 2 & Model 3 & Model 4 & Model 5 & Model 6 & Model 7 & Model 8 \\
+\hline
+Intercept            & $\mathbf{0.54}^{**}$ & $\mathbf{0.53}^{**}$ & $\mathbf{0.80}^{***}$ & $\mathbf{0.51}^{**}$ & $0.39^{*}$            & $\mathbf{0.48}^{**}$   & $0.38$                & $0.46^{*}$            \\
+                     & $(0.22)$             & $(0.21)$             & $(0.04)$              & $(0.21)$             & $(0.23)$              & $(0.23)$               & $(0.24)$              & $(0.27)$              \\
+CSV                  & $-0.00$              &                      &                       &                      &                       &                        &                       &                       \\
+                     & $(0.06)$             &                      &                       &                      &                       &                        &                       &                       \\
+Female Head          & $-0.03$              & $-0.04$              & $-0.04$               & $-0.04$              & $-0.04$               & $-0.06$                & $-0.05$               & $-0.06$               \\
+                     & $(0.07)$             & $(0.07)$             & $(0.06)$              & $(0.06)$             & $(0.07)$              & $(0.08)$               & $(0.07)$              & $(0.08)$              \\
+Total Plot Size      & $-0.00$              & $-0.00$              & $-0.00$               & $-0.00$              & $-0.00$               & $-0.00$                & $-0.00$               & $-0.00$               \\
+                     & $(0.01)$             & $(0.00)$             & $(0.01)$              & $(0.01)$             & $(0.01)$              & $(0.01)$               & $(0.01)$              & $(0.01)$              \\
+Log Mean Income      & $0.03$               & $0.04$               &                       & $0.04$               & $0.05^{*}$            & $0.05$                 & $0.05^{*}$            & $0.05$                \\
+                     & $(0.03)$             & $(0.03)$             &                       & $(0.03)$             & $(0.03)$              & $(0.03)$               & $(0.03)$              & $(0.03)$              \\
+CSA                  &                      & $-0.10^{*}$          &                       &                      &                       & $\mathbf{-0.17}^{***}$ &                       & $\mathbf{-0.16}^{**}$ \\
+                     &                      & $(0.06)$             &                       &                      &                       & $(0.06)$               &                       & $(0.08)$              \\
+CSA Use Count        &                      &                      & $-0.01$               & $-0.01$              & $\mathbf{-0.02}^{**}$ &                        & $\mathbf{-0.02}^{**}$ &                       \\
+                     &                      &                      & $(0.01)$              & $(0.01)$             & $(0.01)$              &                        & $(0.01)$              &                       \\
+Distance to Market   &                      &                      &                       &                      & $-0.00$               & $-0.01$                & $-0.00$               & $-0.01$               \\
+                     &                      &                      &                       &                      & $(0.01)$              & $(0.01)$               & $(0.01)$              & $(0.01)$              \\
+Use CountxOn-Farm \% &                      &                      &                       &                      & $\mathbf{0.12}^{***}$ &                        & $\mathbf{0.11}^{**}$  &                       \\
+                     &                      &                      &                       &                      & $(0.03)$              &                        & $(0.05)$              &                       \\
+CSAxOn-Farm \%       &                      &                      &                       &                      &                       & $0.52^{*}$             &                       & $0.46$                \\
+                     &                      &                      &                       &                      &                       & $(0.31)$               &                       & $(0.51)$              \\
+On-Farm Income Share &                      &                      &                       &                      &                       &                        & $0.07$                & $0.06$                \\
+                     &                      &                      &                       &                      &                       &                        & $(0.26)$              & $(0.38)$              \\
+\hline
+R$^2$                & $0.01$               & $0.04$               & $0.01$                & $0.03$               & $0.10$                & $0.11$                 & $0.10$                & $0.11$                \\
+Adj. R$^2$           & $-0.02$              & $0.01$               & $-0.02$               & $-0.01$              & $0.04$                & $0.05$                 & $0.03$                & $0.04$                \\
+Num. obs.            & $116$                & $116$                & $116$                 & $116$                & $99$                  & $99$                   & $99$                  & $99$                  \\
+RMSE                 & $0.27$               & $0.27$               & $0.27$                & $0.27$               & $0.27$                & $0.27$                 & $0.27$                & $0.27$                \\
+\hline
+\multicolumn{9}{l}{\scriptsize{$^{***}p<0.01$; $^{**}p<0.05$; $^{*}p<0.1$}}
+\end{tabular}
+\label{table:coefficients}
+\end{center}
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{texreg}\OperatorTok{::}\KeywordTok{texreg}\NormalTok{(}
+  \DataTypeTok{l =} \KeywordTok{list}\NormalTok{(}
+\NormalTok{    cv.remiv1,}
+\NormalTok{    cv.remiv2,}
+\NormalTok{    cv.remiv3,}
+    \CommentTok{# cv.remiv4,}
+\NormalTok{    cv.remiv5,}
+    \CommentTok{# cv.remiv6,}
+\NormalTok{    cv.remiv7,}
+\NormalTok{    cv.remiv8,}
+\NormalTok{    cv.remiv9,}
+\NormalTok{    cv.remiv10a,}
+\NormalTok{    cv.remiv11a}
+\NormalTok{  ),}
+  \DataTypeTok{stars =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\FloatTok{0.05}\NormalTok{, }\FloatTok{0.1}\NormalTok{),}
+  \DataTypeTok{include.ci =}\NormalTok{ F,}
+  \DataTypeTok{caption.above =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{caption =} \StringTok{"Instrumented Variable Models"}\NormalTok{,}
+  \CommentTok{# booktabs = TRUE,}
+  \CommentTok{# custom.header = list(}
+  \CommentTok{#   "OLS" = 1:4,}
+  \CommentTok{#   "IV, use count and CSA instrumented by CSV" = 5:9}
+  \CommentTok{# ),}
+  \DataTypeTok{bold =} \FloatTok{0.05}\NormalTok{,}
+  \DataTypeTok{custom.coef.names =} \KeywordTok{c}\NormalTok{(}
+    \StringTok{"Intercept"}\NormalTok{,}
+    \StringTok{"CSA"}\NormalTok{,}
+    \StringTok{"Female Head"}\NormalTok{,}
+    \StringTok{"Total Plot Size"}\NormalTok{,}
+    \StringTok{"CSA Use Count"}\NormalTok{,}
+    \StringTok{"Log Mean Income"}\NormalTok{,}
+    \StringTok{"Distance to Market"}\NormalTok{,}
+    \StringTok{"On-Farm Income Share"}\NormalTok{,}
+    \StringTok{"CSAxOn-Farm %"}\NormalTok{,}
+    \StringTok{"Use CountxOn-Farm %"}
+\NormalTok{  ),}
+   \DataTypeTok{custom.note =} \StringTok{"%stars. Models 1, 2, 6, 8 instrument CSA with CSV, Models 3, 4, 5, 7, and 9 instrument use count with CSV."}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+\caption{Instrumented Variable Models}
+\begin{center}
+\begin{tabular}{l c c c c c c c c c}
+\hline
+ & Model 1 & Model 2 & Model 3 & Model 4 & Model 5 & Model 6 & Model 7 & Model 8 & Model 9 \\
+\hline
+Intercept            & $\mathbf{0.78}^{***}$ & $\mathbf{0.84}^{**}$ & $0.80$   & $0.09$    & $1.91$    & $0.40$   & $0.26$   & $0.62$   & $0.55$   \\
+                     & $(0.29)$              & $(0.41)$             & $(0.85)$ & $(12.52)$ & $(40.38)$ & $(0.26)$ & $(0.52)$ & $(0.68)$ & $(0.40)$ \\
+CSA                  & $-0.02$               & $-0.09$              &          &           &           & $0.19$   &          & $0.28$   &          \\
+                     & $(0.46)$              & $(0.62)$             &          &           &           & $(0.80)$ &          & $(0.85)$ &          \\
+Female Head          &                       & $-0.04$              &          & $-0.20$   & $0.83$    & $0.01$   & $-0.10$  & $0.04$   & $0.10$   \\
+                     &                       & $(0.12)$             &          & $(4.89)$  & $(22.63)$ & $(0.18)$ & $(0.19)$ & $(0.17)$ & $(0.30)$ \\
+Total Plot Size      &                       & $0.00$               &          & $-0.01$   & $0.02$    & $-0.00$  & $-0.00$  & $-0.01$  & $0.00$   \\
+                     &                       & $(0.01)$             &          & $(0.14)$  & $(0.50)$  & $(0.01)$ & $(0.01)$ & $(0.01)$ & $(0.01)$ \\
+CSA Use Count        &                       &                      & $-0.01$  & $-0.16$   & $0.72$    &          & $-0.05$  &          & $0.13$   \\
+                     &                       &                      & $(0.41)$ & $(4.45)$  & $(18.50)$ &          & $(0.13)$ &          & $(0.31)$ \\
+Log Mean Income      &                       &                      &          & $0.13$    & $-0.37$   & $0.03$   & $0.08$   & $-0.01$  & $-0.02$  \\
+                     &                       &                      &          & $(2.77)$  & $(10.93)$ & $(0.07)$ & $(0.11)$ & $(0.07)$ & $(0.13)$ \\
+Distance to Market   &                       &                      &          &           & $0.02$    & $0.00$   & $-0.01$  & $0.01$   & $-0.00$  \\
+                     &                       &                      &          &           & $(0.69)$  & $(0.02)$ & $(0.01)$ & $(0.02)$ & $(0.02)$ \\
+On-Farm Income Share &                       &                      &          &           & $1.01$    &          &          & $-0.64$  & $0.71$   \\
+                     &                       &                      &          &           & $(16.86)$ &          &          & $(1.72)$ & $(1.79)$ \\
+CSAxOn-Farm \%       &                       &                      &          &           &           & $0.25$   &          & $1.50$   &          \\
+                     &                       &                      &          &           &           & $(0.55)$ &          & $(2.86)$ &          \\
+Use CountxOn-Farm \% &                       &                      &          &           &           &          & $-0.07$  &          & $-0.11$  \\
+                     &                       &                      &          &           &           &          & $(0.43)$ &          & $(0.67)$ \\
+\hline
+R$^2$                & $0.01$                & $0.02$               & $0.00$   & $-2.05$   & $-54.62$  & $-0.22$  & $-0.23$  & $-0.78$  & $-1.73$  \\
+Adj. R$^2$           & $-0.00$               & $-0.00$              & $-0.01$  & $-2.16$   & $-58.25$  & $-0.30$  & $-0.31$  & $-0.92$  & $-1.94$  \\
+Num. obs.            & $117$                 & $116$                & $117$    & $116$     & $99$      & $99$     & $99$     & $99$     & $99$     \\
+RMSE                 & $0.27$                & $0.27$               & $0.27$   & $0.48$    & $2.10$    & $0.31$   & $0.31$   & $0.38$   & $0.47$   \\
+\hline
+\multicolumn{10}{l}{\scriptsize{$^{***}p<0.01$; $^{**}p<0.05$; $^{*}p<0.1$. Models 1, 2, 6, 8 instrument CSA with CSV, Models 3, 4, 5, 7, and 9 instrument use count with CSV.}}
+\end{tabular}
+\label{table:coefficients}
+\end{center}
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Rerunning iv }
+
+\CommentTok{# texreg::texreg(}
+\CommentTok{#   l = list(}
+\CommentTok{#     cv.remiv10a,}
+\CommentTok{#     cv.remiv11a}
+\CommentTok{#   ),}
+\CommentTok{#   # no.margin = T,}
+\CommentTok{#   include.ci = F,}
+\CommentTok{#   stars = c(0.01, 0.05, 0.1),}
+\CommentTok{#   caption.above = TRUE,}
+\CommentTok{#   caption = "Respecified Instrumented Variable Models",}
+\CommentTok{#   # booktabs = TRUE,}
+\CommentTok{#   # custom.header = list(}
+\CommentTok{#   #   "OLS" = 1:4,}
+\CommentTok{#   #   "IV, use count and CSA instrumented by CSV" = 5:9}
+\CommentTok{#   # ),}
+\CommentTok{#   bold = 0.05,}
+\CommentTok{#   custom.coef.names = c(}
+\CommentTok{#     "Intercept",}
+\CommentTok{#     "CSA",}
+\CommentTok{#     "Female Head",}
+\CommentTok{#     "Total Plot Size",}
+\CommentTok{#     "Log Mean Income",}
+\CommentTok{#     "Distance to Market",}
+\CommentTok{#     "On-Farm Income Share",}
+\CommentTok{#     "CSAxOn-Farm %",}
+\CommentTok{#     "CSA Use Count",}
+\CommentTok{#     "Use CountxOn-Farm %"}
+\CommentTok{#   ),}
+\CommentTok{#    # custom.note = "%stars. Model 1 instruments CSA with CSV in interaction, Model 2 instruments use count with CSV."}
+\CommentTok{# )}
+
+
+\CommentTok{#non-robust}
+\CommentTok{# texreg::texreg(}
+\CommentTok{#   l = list(}
+\CommentTok{#     cv.lm1,}
+\CommentTok{#     cv.lm2,}
+\CommentTok{#     cv.lm3,}
+\CommentTok{#     cv.lm4,}
+\CommentTok{#     cv.lm5,}
+\CommentTok{#     cv.lm6,}
+\CommentTok{#     cv.lm7,}
+\CommentTok{#     cv.lm8}
+\CommentTok{#   ),}
+\CommentTok{#   stars = c(0.01, 0.05, 0.1),}
+\CommentTok{#   include.ci = F,}
+\CommentTok{#   caption.above = TRUE,}
+\CommentTok{#   caption = "OLS Models",}
+\CommentTok{#   # booktabs = TRUE,}
+\CommentTok{#   # custom.header = list(}
+\CommentTok{#   #   "OLS" = 1:4,}
+\CommentTok{#   #   "IV, use count and CSA instrumented by CSV" = 5:9}
+\CommentTok{#   # ),}
+\CommentTok{#   bold = 0.05,}
+\CommentTok{#   custom.coef.names = c(}
+\CommentTok{#     "Intercept",}
+\CommentTok{#     "CSV",}
+\CommentTok{#     "Female Head",}
+\CommentTok{#     "Total Plot Size",}
+\CommentTok{#     "Log Mean Income",}
+\CommentTok{#     "CSA",}
+\CommentTok{#     "CSA Use Count",}
+\CommentTok{#     "Distance to Market",}
+\CommentTok{#     "Use CountxOn-Farm %",}
+\CommentTok{#     "CSAxOn-Farm %",}
+\CommentTok{#     "On-Farm Income Share"}
+\CommentTok{#   ),}
+\CommentTok{#   #  custom.note = "%stars. Models 5 and 6 instrument CSA with CSV, Models 7, 8, and 9 instrument use count with CSV."}
+\CommentTok{# )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{useshare <-}\StringTok{ }\KeywordTok{lm_robust}\NormalTok{(}
+\NormalTok{    usecount }\OperatorTok{~}\StringTok{ }\NormalTok{CSV }\OperatorTok{+}\StringTok{ }\KeywordTok{log}\NormalTok{(mmoInc) }\OperatorTok{+}\StringTok{ }\NormalTok{femalehh }\OperatorTok{+}\StringTok{ }\NormalTok{totalplot }\OperatorTok{+}\StringTok{ }\NormalTok{dist_fmarket }\OperatorTok{+}\StringTok{ }\NormalTok{oninc,}
+\NormalTok{    hhchars,}
+    \DataTypeTok{se_type =} \StringTok{"stata"}
+\NormalTok{  )}
+
+\KeywordTok{summary}\NormalTok{(useshare, }\DataTypeTok{diagnostics =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+Call: lm\_robust(formula = usecount \textasciitilde{} CSV + log(mmoInc)
++ femalehh + totalplot + dist\_fmarket + oninc, data = hhchars, se\_type
+= ``stata'')
+
+Standard error type: HC1
+
+Coefficients: Estimate Std. Error t value
+Pr(\textgreater\textbar t\textbar) CI Lower CI Upper DF (Intercept)
+-2.23055 2.23226 -0.99924 0.32030 -6.6640 2.20291 92 CSV 0.03302 0.84394
+0.03913 0.96887 -1.6431 1.70916 92 log(mmoInc) 0.59229 0.22703 2.60890
+0.01060 0.1414 1.04319 92 femalehh -1.21326 0.58455 -2.07556 0.04073
+-2.3742 -0.05230 92 totalplot -0.02606 0.05139 -0.50715 0.61326 -0.1281
+0.07601 92 dist\_fmarket -0.03488 0.11253 -0.30998 0.75728 -0.2584
+0.18861 92 oninc -0.92480 2.69807 -0.34276 0.73256 -6.2834 4.43380 92
+
+Multiple R-squared: 0.07638 , Adjusted R-squared: 0.01614 F-statistic:
+2.277 on 6 and 92 DF, p-value: 0.04286
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{texreg}\OperatorTok{::}\KeywordTok{texreg}\NormalTok{(}
+\NormalTok{ useshare,}
+  \DataTypeTok{stars =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\FloatTok{0.05}\NormalTok{, }\FloatTok{0.1}\NormalTok{),}
+  \DataTypeTok{include.ci =}\NormalTok{ F,}
+  \DataTypeTok{caption.above =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{caption =} \StringTok{"Predicting CSA Use Count"}\NormalTok{,}
+  \CommentTok{# booktabs = TRUE,}
+  \CommentTok{# custom.header = list(}
+  \CommentTok{#   "OLS" = 1:4,}
+  \CommentTok{#   "IV, use count and CSA instrumented by CSV" = 5:9}
+  \CommentTok{# ),}
+  \CommentTok{# bold = 0.05,}
+  \DataTypeTok{custom.coef.names =} \KeywordTok{c}\NormalTok{(}
+    \StringTok{"Intercept"}\NormalTok{,}
+    \StringTok{"CSV"}\NormalTok{,}
+    \StringTok{"Log Mean Income"}\NormalTok{,}
+    \StringTok{"Female Head"}\NormalTok{,}
+    \StringTok{"Total Plot Size"}\NormalTok{,}
+    \StringTok{"Distance to Market"}\NormalTok{,}
+    \StringTok{"On-Farm Income Share"}
+\NormalTok{    ),}
+   \DataTypeTok{custom.note =} \StringTok{"%stars."}\NormalTok{, }
+ \DataTypeTok{siunitx =}\NormalTok{ T}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\usepackage{siunitx}
+
+\begin{table}
+\caption{Predicting CSA Use Count}
+\begin{center}
+\sisetup{parse-numbers=false, table-text-alignment=right}
+\begin{tabular}{l S[table-format=2.4]}
+\hline
+ & {Model 1} \\
+\hline
+Intercept            & -2.23      \\
+                     & (2.23)     \\
+CSV                  & 0.03       \\
+                     & (0.84)     \\
+Log Mean Income      & 0.59^{**}  \\
+                     & (0.23)     \\
+Female Head          & -1.21^{**} \\
+                     & (0.58)     \\
+Total Plot Size      & -0.03      \\
+                     & (0.05)     \\
+Distance to Market   & -0.03      \\
+                     & (0.11)     \\
+On-Farm Income Share & -0.92      \\
+                     & (2.70)     \\
+\hline
+R$^2$                & 0.08       \\
+Adj. R$^2$           & 0.02       \\
+Num. obs.            & 99         \\
+RMSE                 & 2.87       \\
+\hline
+\multicolumn{2}{l}{\scriptsize{$^{***}p<0.01$; $^{**}p<0.05$; $^{*}p<0.1$.}}
+\end{tabular}
+\label{table:coefficients}
+\end{center}
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv1, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ CSA | CSV, data = hhchars, se_type = "stata", 
+##     diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##             Estimate Std. Error  t value Pr(>|t|) CI Lower CI Upper  DF
+## (Intercept)  0.78005     0.2900  2.68935 0.008224   0.2055   1.3546 115
+## CSA         -0.01629     0.4568 -0.03566 0.971615  -0.9211   0.8885 115
+## 
+## Multiple R-squared:  0.007386 ,  Adjusted R-squared:  -0.001245 
+## F-statistic: 0.001272 on 1 and 115 DF,  p-value: 0.9716
+## 
+## Diagnostics:
+##                  numdf dendf value p.value
+## Weak instruments     1   115 1.422   0.236
+## Wu-Hausman           1   114 0.019   0.892
+## Overidentifying      0    NA    NA      NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv2, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ CSA + femalehh + totalplot | CSV + femalehh + 
+##     totalplot, data = hhchars, se_type = "stata", diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##               Estimate Std. Error  t value Pr(>|t|) CI Lower CI Upper  DF
+## (Intercept)  0.8381841   0.407340  2.05770  0.04194  0.03109  1.64528 112
+## CSA         -0.0940585   0.615650 -0.15278  0.87885 -1.31389  1.12577 112
+## femalehh    -0.0400572   0.120513 -0.33239  0.74022 -0.27884  0.19872 112
+## totalplot    0.0001608   0.005405  0.02974  0.97632 -0.01055  0.01087 112
+## 
+## Multiple R-squared:  0.02449 ,   Adjusted R-squared:  -0.001637 
+## F-statistic: 0.05837 on 3 and 112 DF,  p-value: 0.9814
+## 
+## Diagnostics:
+##                  numdf dendf value p.value
+## Weak instruments     1   112 0.842   0.361
+## Wu-Hausman           1   111 0.000   0.989
+## Overidentifying      0    NA    NA      NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv3, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ usecount | CSV, data = hhchars, se_type = "stata", 
+##     diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##             Estimate Std. Error  t value Pr(>|t|) CI Lower CI Upper  DF
+## (Intercept)  0.79945     0.8517  0.93861   0.3499  -0.8877   2.4866 115
+## usecount    -0.01436     0.4112 -0.03494   0.9722  -0.8288   0.8001 115
+## 
+## Multiple R-squared:  9.239e-06 , Adjusted R-squared:  -0.008686 
+## F-statistic: 0.001221 on 1 and 115 DF,  p-value: 0.9722
+## 
+## Diagnostics:
+##                  numdf dendf value p.value
+## Weak instruments     1   115 0.047   0.829
+## Wu-Hausman           1   114 0.000   0.986
+## Overidentifying      0    NA    NA      NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# print(summary(cv.remiv4, diagnostics = T))}
+\end{Highlighting}
+\end{Shaded}
+
+\pagebreak
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv5, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ usecount + femalehh + totalplot + log(mmoInc) | 
+##     CSV + femalehh + totalplot + log(mmoInc), data = hhchars, 
+##     se_type = "stata", diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##              Estimate Std. Error   t value Pr(>|t|) CI Lower CI Upper  DF
+## (Intercept)  0.089961    12.5182  0.007186   0.9943 -24.7158  24.8957 111
+## usecount    -0.159283     4.4527 -0.035772   0.9715  -8.9826   8.6640 111
+## femalehh    -0.202855     4.8913 -0.041473   0.9670  -9.8952   9.4895 111
+## totalplot   -0.005437     0.1387 -0.039214   0.9688  -0.2802   0.2693 111
+## log(mmoInc)  0.127870     2.7734  0.046106   0.9633  -5.3678   5.6236 111
+## 
+## Multiple R-squared:  -2.05 , Adjusted R-squared:  -2.16 
+## F-statistic: 0.1709 on 4 and 111 DF,  p-value: 0.9529
+## 
+## Diagnostics:
+##                  numdf dendf value p.value
+## Weak instruments     1   111 0.002   0.968
+## Wu-Hausman           1   110 0.005   0.945
+## Overidentifying      0    NA    NA      NA
+\end{verbatim}
+
+\pagebreak
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv7, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ usecount + femalehh + totalplot + log(mmoInc) + 
+##     dist_fmarket + oninc | CSV + femalehh + totalplot + log(mmoInc) + 
+##     dist_fmarket + oninc, data = hhchars, se_type = "stata", 
+##     diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##              Estimate Std. Error  t value Pr(>|t|) CI Lower CI Upper DF
+## (Intercept)   1.91366    40.3833  0.04739   0.9623 -78.2910   82.118 92
+## usecount      0.71544    18.5004  0.03867   0.9692 -36.0280   37.459 92
+## femalehh      0.83270    22.6338  0.03679   0.9707 -44.1199   45.785 92
+## totalplot     0.01704     0.4972  0.03427   0.9727  -0.9704    1.004 92
+## log(mmoInc)  -0.37357    10.9280 -0.03418   0.9728 -22.0775   21.330 92
+## dist_fmarket  0.02206     0.6921  0.03188   0.9746  -1.3525    1.397 92
+## oninc         1.00994    16.8643  0.05989   0.9524 -32.4840   34.504 92
+## 
+## Multiple R-squared:  -54.62 ,    Adjusted R-squared:  -58.25 
+## F-statistic: 0.0203 on 6 and 92 DF,  p-value: 1
+## 
+## Diagnostics:
+##                  numdf dendf value p.value
+## Weak instruments     1    92 0.002   0.969
+## Wu-Hausman           1    91 0.126   0.723
+## Overidentifying      0    NA    NA      NA
+\end{verbatim}
+
+\pagebreak
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv8, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ CSA + femalehh + totalplot + log(mmoInc) + 
+##     dist_fmarket + oninc:CSA | CSV + femalehh + totalplot + log(mmoInc) + 
+##     dist_fmarket + oninc:CSV, data = hhchars, se_type = "stata", 
+##     diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##               Estimate Std. Error  t value Pr(>|t|) CI Lower CI Upper DF
+## (Intercept)   0.399097    0.25722  1.55158   0.1242 -0.11176  0.90996 92
+## CSA           0.191437    0.80290  0.23843   0.8121 -1.40319  1.78607 92
+## femalehh      0.005868    0.17553  0.03343   0.9734 -0.34274  0.35448 92
+## totalplot    -0.003184    0.01169 -0.27235   0.7860 -0.02640  0.02004 92
+## log(mmoInc)   0.027748    0.07221  0.38428   0.7017 -0.11566  0.17116 92
+## dist_fmarket  0.001395    0.02237  0.06238   0.9504 -0.04304  0.04583 92
+## CSA:oninc     0.246395    0.55148  0.44678   0.6561 -0.84890  1.34169 92
+## 
+## Multiple R-squared:  -0.2212 ,   Adjusted R-squared:  -0.3009 
+## F-statistic: 0.4762 on 6 and 92 DF,  p-value: 0.8244
+## 
+## Diagnostics:
+##                              numdf dendf value p.value   
+## Weak instruments (CSA)           2    92 0.394 0.67521   
+## Weak instruments (CSA:oninc)     2    92 5.538 0.00536 **
+## Wu-Hausman                       2    90 0.587 0.55800   
+## Overidentifying                  0    NA    NA      NA   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\pagebreak
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv9, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ usecount + femalehh + totalplot + log(mmoInc) + 
+##     dist_fmarket + oninc:usecount | CSV + femalehh + totalplot + 
+##     log(mmoInc) + dist_fmarket + oninc:CSV, data = hhchars, se_type = "stata", 
+##     diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|) CI Lower CI Upper DF
+## (Intercept)     0.256606   0.516764  0.4966   0.6207 -0.76973  1.28294 92
+## usecount       -0.048702   0.134392 -0.3624   0.7179 -0.31562  0.21821 92
+## femalehh       -0.095953   0.190349 -0.5041   0.6154 -0.47400  0.28210 92
+## totalplot      -0.001451   0.007168 -0.2024   0.8401 -0.01569  0.01279 92
+## log(mmoInc)     0.081257   0.110809  0.7333   0.4652 -0.13882  0.30133 92
+## dist_fmarket   -0.006264   0.011752 -0.5330   0.5953 -0.02961  0.01708 92
+## usecount:oninc -0.073578   0.425468 -0.1729   0.8631 -0.91859  0.77144 92
+## 
+## Multiple R-squared:  -0.2263 ,   Adjusted R-squared:  -0.3063 
+## F-statistic: 0.6594 on 6 and 92 DF,  p-value: 0.6825
+## 
+## Diagnostics:
+##                                   numdf dendf value p.value  
+## Weak instruments (usecount)           2    92 2.795  0.0663 .
+## Weak instruments (usecount:oninc)     2    92 4.765  0.0107 *
+## Wu-Hausman                            2    90 0.316  0.7301  
+## Overidentifying                       0    NA    NA      NA  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\pagebreak
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv10a, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ CSA + femalehh + totalplot + log(mmoInc) + 
+##     dist_fmarket + oninc * CSA | CSV + femalehh + totalplot + 
+##     log(mmoInc) + dist_fmarket + oninc * CSV, data = hhchars, 
+##     se_type = "stata", diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|) CI Lower CI Upper DF
+## (Intercept)   0.620323    0.68148  0.9103   0.3651 -0.73336  1.97401 91
+## CSA           0.279641    0.85490  0.3271   0.7443 -1.41851  1.97779 91
+## femalehh      0.039338    0.16806  0.2341   0.8155 -0.29449  0.37317 91
+## totalplot    -0.005993    0.01106 -0.5421   0.5891 -0.02795  0.01597 91
+## log(mmoInc)  -0.010056    0.07494 -0.1342   0.8935 -0.15891  0.13880 91
+## dist_fmarket  0.007819    0.02199  0.3555   0.7230 -0.03587  0.05151 91
+## oninc        -0.642020    1.72239 -0.3727   0.7102 -4.06333  2.77929 91
+## CSA:oninc     1.500675    2.86287  0.5242   0.6014 -4.18606  7.18741 91
+## 
+## Multiple R-squared:  -0.7837 ,   Adjusted R-squared:  -0.921 
+## F-statistic: 0.5316 on 7 and 91 DF,  p-value: 0.8085
+## 
+## Diagnostics:
+##                              numdf dendf value p.value
+## Weak instruments (CSA)           2    91 0.566   0.570
+## Weak instruments (CSA:oninc)     2    91 1.377   0.258
+## Wu-Hausman                       2    89 1.224   0.299
+## Overidentifying                  0    NA    NA      NA
+\end{verbatim}
+
+\pagebreak
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{summary}\NormalTok{(cv.remiv11a, }\DataTypeTok{diagnostics =}\NormalTok{ T))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## iv_robust(formula = CV ~ usecount + femalehh + totalplot + log(mmoInc) + 
+##     dist_fmarket + oninc * usecount | CSV + femalehh + totalplot + 
+##     log(mmoInc) + dist_fmarket + oninc * CSV, data = hhchars, 
+##     se_type = "stata", diagnostics = T)
+## 
+## Standard error type:  HC1 
+## 
+## Coefficients:
+##                  Estimate Std. Error  t value Pr(>|t|) CI Lower CI Upper DF
+## (Intercept)     0.5477943   0.403802  1.35659   0.1783 -0.25431  1.34990 91
+## usecount        0.1288747   0.313650  0.41089   0.6821 -0.49415  0.75190 91
+## femalehh        0.0978465   0.295528  0.33109   0.7413 -0.48918  0.68488 91
+## totalplot       0.0011452   0.009175  0.12482   0.9009 -0.01708  0.01937 91
+## log(mmoInc)    -0.0163883   0.132374 -0.12380   0.9017 -0.27933  0.24656 91
+## dist_fmarket   -0.0004158   0.018063 -0.02302   0.9817 -0.03630  0.03546 91
+## oninc           0.7125043   1.790688  0.39789   0.6916 -2.84448  4.26949 91
+## usecount:oninc -0.1142721   0.672626 -0.16989   0.8655 -1.45036  1.22182 91
+## 
+## Multiple R-squared:  -1.728 ,    Adjusted R-squared:  -1.938 
+## F-statistic: 0.5348 on 7 and 91 DF,  p-value: 0.8061
+## 
+## Diagnostics:
+##                                   numdf dendf value p.value
+## Weak instruments (usecount)           2    91 0.763   0.469
+## Weak instruments (usecount:oninc)     2    91 0.902   0.409
+## Wu-Hausman                            2    89 0.887   0.415
+## Overidentifying                       0    NA    NA      NA
+\end{verbatim}
+
+\#\#Plots
+
+Poverty count by participation group
+\includegraphics{Main-2807_files/figure-latex/pfcsap-1.pdf}
+
+Participation group by initial income
+
+\includegraphics{Main-2807_files/figure-latex/csapiinc-1.pdf}
+
+\begin{verbatim}
+## # A tibble: 2 x 4
+##     CSA  mInc medInc count
+##   <dbl> <dbl>  <dbl> <int>
+## 1     0 5749.  1775     41
+## 2     1 6421.  3330.    73
+\end{verbatim}
+
+Income box plots over each month with poverty line
+\includegraphics{Main-2807_files/figure-latex/qiinc-1.pdf}
+
+Share of households by number of months spent under pov line, by CSA
+participation
+\includegraphics{Main-2807_files/figure-latex/spfcsap-1.pdf}
+\includegraphics{Main-2807_files/figure-latex/spfcsap-2.pdf}
+\includegraphics{Main-2807_files/figure-latex/spfcsap-3.pdf}
+\includegraphics{Main-2807_files/figure-latex/spfcsap-4.pdf} kernel can
+be found here \url{https://rdrr.io/r/stats/density.html}
+
+By only CSA \includegraphics{Main-2807_files/figure-latex/spfcsa-1.pdf}
+\includegraphics{Main-2807_files/figure-latex/spfcsa-2.pdf}
+
+\begin{verbatim}
+## Warning: Groups with fewer than two data points have been dropped.
+\end{verbatim}
+
+\includegraphics{Main-2807_files/figure-latex/spfcsa-3.pdf}
+
+By only CSV \includegraphics{Main-2807_files/figure-latex/spfcsv-1.pdf}
+\includegraphics{Main-2807_files/figure-latex/spfcsv-2.pdf}
+
+Share of households by number of months spent under pov line, by income
+quintile
+
+\begin{verbatim}
+## Warning: Ignoring unknown aesthetics: stat
+\end{verbatim}
+
+\includegraphics{Main-2807_files/figure-latex/spfq-1.pdf}
+\includegraphics{Main-2807_files/figure-latex/spfq-2.pdf}
+
+Gridding both CSA and Quintile
+
+\#\#CV Plots CV by quintile group
+
+\includegraphics{Main-2807_files/figure-latex/cvplots-1.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{Main-2807_files/figure-latex/cvplots-2.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{Main-2807_files/figure-latex/cvplots-3.pdf}
+
+CV by participation group
+
+\includegraphics{Main-2807_files/figure-latex/pcvp-1.pdf}
+\includegraphics{Main-2807_files/figure-latex/pcvcsv-1.pdf}
+
+Non-grouped Cv, by quintile
+
+\includegraphics{Main-2807_files/figure-latex/cvq-1.pdf}
+
+Non-grouped Cv, by participation
+
+\includegraphics{Main-2807_files/figure-latex/cvp-1.pdf} Mean CV by CSA
+
+\includegraphics{Main-2807_files/figure-latex/cvcsa-1.pdf}
+
+Mean CV by CSV
+
+\includegraphics{Main-2807_files/figure-latex/cvcsv-1.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{Main-2807_files/figure-latex/pfcv-1.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{Main-2807_files/figure-latex/pfcvd-1.pdf}
+
+\includegraphics{Main-2807_files/figure-latex/mmicv-1.pdf}
+
+Here's the same thing, but using household monthly income instead of the
+mean of them. Note: this means more observations of different income
+levels, but the same poverty persistence for each household, so we're
+just increasing the density of observations for incomes, based on
+endline poverty measures.
+\includegraphics{Main-2807_files/figure-latex/mipf-1.pdf}
+\includegraphics{Main-2807_files/figure-latex/micv-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite R in publications use:
+## 
+##   R Core Team (2020). R: A language and environment for statistical
+##   computing. R Foundation for Statistical Computing, Vienna, Austria.
+##   URL https://www.R-project.org/.
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {R: A Language and Environment for Statistical Computing},
+##     author = {{R Core Team}},
+##     organization = {R Foundation for Statistical Computing},
+##     address = {Vienna, Austria},
+##     year = {2020},
+##     url = {https://www.R-project.org/},
+##   }
+## 
+## We have invested a lot of time and effort in creating R, please cite it
+## when using it for data analysis. See also 'citation("pkgname")' for
+## citing R packages.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite package 'dplyr' in publications use:
+## 
+##   Hadley Wickham, Romain François, Lionel Henry and Kirill Müller
+##   (2020). dplyr: A Grammar of Data Manipulation. R package version
+##   0.8.5. https://CRAN.R-project.org/package=dplyr
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {dplyr: A Grammar of Data Manipulation},
+##     author = {Hadley Wickham and Romain François and Lionel Henry and Kirill Müller},
+##     year = {2020},
+##     note = {R package version 0.8.5},
+##     url = {https://CRAN.R-project.org/package=dplyr},
+##   }
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{(}\StringTok{"tidyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite package 'tidyr' in publications use:
+## 
+##   Hadley Wickham and Lionel Henry (2020). tidyr: Tidy Messy Data. R
+##   package version 1.0.2. https://CRAN.R-project.org/package=tidyr
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {tidyr: Tidy Messy Data},
+##     author = {Hadley Wickham and Lionel Henry},
+##     year = {2020},
+##     note = {R package version 1.0.2},
+##     url = {https://CRAN.R-project.org/package=tidyr},
+##   }
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{(}\StringTok{"knitr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite the 'knitr' package in publications use:
+## 
+##   Yihui Xie (2020). knitr: A General-Purpose Package for Dynamic Report
+##   Generation in R. R package version 1.28.
+## 
+##   Yihui Xie (2015) Dynamic Documents with R and knitr. 2nd edition.
+##   Chapman and Hall/CRC. ISBN 978-1498716963
+## 
+##   Yihui Xie (2014) knitr: A Comprehensive Tool for Reproducible
+##   Research in R. In Victoria Stodden, Friedrich Leisch and Roger D.
+##   Peng, editors, Implementing Reproducible Computational Research.
+##   Chapman and Hall/CRC. ISBN 978-1466561595
+## 
+## To see these entries in BibTeX format, use 'print(<citation>,
+## bibtex=TRUE)', 'toBibtex(.)', or set
+## 'options(citation.bibtex.max=999)'.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite ggplot2 in publications, please use:
+## 
+##   H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+##   Springer-Verlag New York, 2016.
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Book{,
+##     author = {Hadley Wickham},
+##     title = {ggplot2: Elegant Graphics for Data Analysis},
+##     publisher = {Springer-Verlag New York},
+##     year = {2016},
+##     isbn = {978-3-319-24277-4},
+##     url = {https://ggplot2.tidyverse.org},
+##   }
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{(}\StringTok{"haven"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite package 'haven' in publications use:
+## 
+##   Hadley Wickham and Evan Miller (2019). haven: Import and Export
+##   'SPSS', 'Stata' and 'SAS' Files. R package version 2.2.0.
+##   https://CRAN.R-project.org/package=haven
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {haven: Import and Export 'SPSS', 'Stata' and 'SAS' Files},
+##     author = {Hadley Wickham and Evan Miller},
+##     year = {2019},
+##     note = {R package version 2.2.0},
+##     url = {https://CRAN.R-project.org/package=haven},
+##   }
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{(}\StringTok{"ggthemes"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite package 'ggthemes' in publications use:
+## 
+##   Jeffrey B. Arnold (2019). ggthemes: Extra Themes, Scales and Geoms
+##   for 'ggplot2'. R package version 4.2.0.
+##   https://CRAN.R-project.org/package=ggthemes
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {ggthemes: Extra Themes, Scales and Geoms for 'ggplot2'},
+##     author = {Jeffrey B. Arnold},
+##     year = {2019},
+##     note = {R package version 4.2.0},
+##     url = {https://CRAN.R-project.org/package=ggthemes},
+##   }
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{(}\StringTok{"car"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite the car package in publications use:
+## 
+##   John Fox and Sanford Weisberg (2019). An {R} Companion to Applied
+##   Regression, Third Edition. Thousand Oaks CA: Sage. URL:
+##   https://socialsciences.mcmaster.ca/jfox/Books/Companion/
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Book{,
+##     title = {An {R} Companion to Applied Regression},
+##     edition = {Third},
+##     author = {John Fox and Sanford Weisberg},
+##     year = {2019},
+##     publisher = {Sage},
+##     address = {Thousand Oaks {CA}},
+##     url = {https://socialsciences.mcmaster.ca/jfox/Books/Companion/},
+##   }
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{(}\StringTok{"estimatr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite package 'estimatr' in publications use:
+## 
+##   Graeme Blair, Jasper Cooper, Alexander Coppock, Macartan Humphreys
+##   and Luke Sonnet (2020). estimatr: Fast Estimators for Design-Based
+##   Inference. R package version 0.22.0.
+##   https://CRAN.R-project.org/package=estimatr
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {estimatr: Fast Estimators for Design-Based Inference},
+##     author = {Graeme Blair and Jasper Cooper and Alexander Coppock and Macartan Humphreys and Luke Sonnet},
+##     year = {2020},
+##     note = {R package version 0.22.0},
+##     url = {https://CRAN.R-project.org/package=estimatr},
+##   }
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{citation}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## To cite R in publications use:
+## 
+##   R Core Team (2020). R: A language and environment for statistical
+##   computing. R Foundation for Statistical Computing, Vienna, Austria.
+##   URL https://www.R-project.org/.
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {R: A Language and Environment for Statistical Computing},
+##     author = {{R Core Team}},
+##     organization = {R Foundation for Statistical Computing},
+##     address = {Vienna, Austria},
+##     year = {2020},
+##     url = {https://www.R-project.org/},
+##   }
+## 
+## We have invested a lot of time and effort in creating R, please cite it
+## when using it for data analysis. See also 'citation("pkgname")' for
+## citing R packages.
+\end{verbatim}
+
+Note that the \texttt{echo\ =\ FALSE} parameter was added to the code
+chunk to prevent printing of the R code that generated the plot.
+
+\end{document}
